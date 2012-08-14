@@ -1,0 +1,43 @@
+{% extends "peliculas/base.html" %}
+{% load peliculas_extras %}
+{% block head %}
+    <script type="text/javascript" src="/site_media/vista.js"></script>
+{% endblock %}
+{% block contenido %}
+    <form action="{%  url peliculas.views.index %}" method="get">{% csrf_token %}
+        {{ filtro.ordenar.label_tag }}: {{ filtro.ordenar }}
+		{{ filtro.genero.label_tag }}: {{ filtro.genero }}
+	    {% if user.is_authenticated %}
+	        {{ filtro.vistas.label_tag }}: {{filtro.vistas}}
+	    {% endif %}
+    </form>
+    
+    {% include "paginacion.html" %}
+    {% for item in lista.object_list %}
+        <article>
+            <div class="lateral">
+                <a class="lightbox" title="{{ item.titulo }}" href="/site_media/posters/{{ item.poster }}">
+                    <img src="/site_media/posters/thumbs/{{ item.poster }}" width="100px" alt=""></a>
+                <br />
+                <center>
+                    {% if user.is_authenticated %}
+                        {% if item|vista:user.id %}
+                            <input id="{{ item.id }}" type="image" title="Marcar como no vista" alt="Visto" src="/site_media/images/button_cancel.gif">
+                        {% else %}
+                            <input id="{{ item.id }}" type="image" title="Marcar como vista" alt="Visto" src="/site_media/images/button_ok.gif">
+                        {% endif %}
+                    {% endif %}
+                </center>
+            </div>
+            <div class="principal">
+                <div class="titulo">{{ item.titulo }} ({{ item.anno }})</div>
+                <div class="parte"><b>DIRECTOR:</b>	{% for r in item.direccion.all %}<a href="{% url profesionales.views.detail r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+                <div class="parte"><b>GENERO:</b> {% for r in item.genero.all %}{{r.nombre}}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+                <div class="parte"><b>REPARTO:</b> {% for r in item.reparto.all %}<a href="{% url profesionales.views.detail r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+                <div class="parte"><b>SINOPSIS:</b> {{ item.sinopsis }}</div>
+            </div>
+            <div class="clear"></div>
+        </article>
+    {% endfor %}
+    {% include "paginacion.html" %}
+{% endblock %}

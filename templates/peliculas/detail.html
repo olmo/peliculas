@@ -1,0 +1,35 @@
+{% extends "peliculas/base.html" %}
+{% load peliculas_extras %}
+{% block head %}
+    <script type="text/javascript" src="/site_media/vista.js"></script>
+{% endblock %}
+{% block contenido %}
+	<table>
+        <tr class='image'><td rowspan="19">
+            <a class="lightbox" title="{{ item.titulo }}" href="/site_media/posters/{{ item.poster }}">
+            <img src="/site_media/posters/thumbs/{{ item.poster }}" width="100px" alt=""></a>
+            <br />
+            <center>
+                {% if user.is_authenticated %}
+                    {% if item|vista:user.id %}
+                        <input id="{{ item.id }}" type="image" title="Marcar como no vista" alt="Visto" src="/site_media/images/button_cancel.gif">
+                    {% else %}
+                        <input id="{{ item.id }}" type="image" title="Marcar como vista" alt="Visto" src="/site_media/images/button_ok.gif">
+                    {% endif %}
+                {% endif %}
+            </center>
+        </td></tr>
+        <tr class='title'><th>Título</th><td>{{ item.titulo }}</td></tr>
+        <tr class='year'><th>Año</th><td>{{ item.anno }}</td></tr>
+        <tr class='runtime'><th>Duración</th><td>{{ item.duracion }}</td></tr>
+        <tr class='year'><th>País</th><td>{{ item.pais }}</td></tr>
+        <tr class='director'><th>Director</th><td>{% for r in item.direccion.all %}<a href="{% url profesionales.views.detail r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
+        <tr class='year'><th>Guión</th><td>{% for r in item.guion.all %}<a href="{% url profesionales.views.detail r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
+        <tr class='year'><th>Música</th><td>{% for r in item.musica.all %}<a href="{% url profesionales.views.detail r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
+        <tr class='year'><th>Fotografía</th><td>{% for r in item.fotografia.all %}<a href="{% url profesionales.views.detail r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
+        <tr class='year'><th>Producción</th><td>{{ item.produccion }}</td></tr>
+        <tr class='genre'><th>Género</th><td>{% for r in item.genero.all %}{{r.nombre}}{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
+        <tr class='cast'><th>Reparto</th><td>{% for r in item.reparto.all %}<a href="{% url profesionales.views.detail r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
+        <tr class='plot'><th>Resumen</th><td>{{ item.sinopsis }}</td></tr>
+    </table>
+{% endblock %}

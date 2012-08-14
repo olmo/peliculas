@@ -1,0 +1,55 @@
+{% extends "peliculas/base.html" %}
+{% block contenido %}
+
+    {% if apartado == 0 %}
+        <form action="{% url peliculas.views.add %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="nombre" />
+            <input type="hidden" name="apartado" value="1" />
+            <input type="submit" value="Buscar" />
+        </form>
+    {% endif %}
+
+    {% if apartado == 1 %}
+        <form action="{% url peliculas.views.add %}" method="post">
+            {% csrf_token %}
+            {% for v,k in resultados.iteritems %}
+                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ v }}" />
+                <label for="choice{{ forloop.counter }}">{{ k }}</label><br />
+            {% endfor %}
+            <input type="hidden" name="apartado" value="2" />
+            <input type="submit" value="Continuar" />
+        </form>
+    {% endif %}
+
+    {% if apartado == 2 %}
+        <div id="stylized" class="myform">
+            <h1>Sign-up form</h1>
+            <p>This is the basic look of my form without table</p>
+            <form action="{% url peliculas.views.add %}" method="post">
+                {% csrf_token %}
+                <label>Título</label><input type="text" name="titulo" value="{{ info.titulo }}"/>
+                <label>Título original</label><input type="text" name="titulo_o" value="{{ info.titulo_o }}"/>
+                <label>Año</label><input type="text" name="anno" value="{{ info.anno }}"/>
+                <label>Duración</label><input type="text" name="duracion" value="{{ info.duracion }}"/>
+                <label>País</label><input type="text" name="pais" value="{{ info.pais }}"/>
+                <label>Director</label><input type="text" name="direccion" value="{{ info.director }}"/>
+                <label>Guión</label><input type="text" name="guion" value="{{ info.guion }}"/>
+                <label>Música</label><input type="text" name="musica" value="{{ info.musica }}"/>
+                <label>Fotografía</label><input type="text" name="fotografia" value="{{ info.fotografia }}"/>
+                <label>Reparto</label><input type="text" name="reparto" value="{{ info.reparto }}"/>
+                <label>Producción</label><input type="text" name="productora" value="{{ info.productora }}"/>
+                <label>Géneros</label><input type="text" name="genero" value="{{ info.genero }}"/>
+                <label>Póster</label><input type="text" name="poster" value="{{ info.poster }}"/>
+                <label>Sinopsis</label><textarea name="sinopsis" cols="45" rows="7">{{ info.sinopsis }}</textarea>
+                <label>Categoría</label><select name="categoria">{% for c in cat %}<option value="{{ c.id }}">{{ c.nombre }}</option> {% endfor %}</select>
+                <label>Web</label><input type="text" name="web" value="{{ info.web }}"/>
+                <input type="hidden" name="apartado" value="3" />
+                <br/>
+                <button type="submit">Añadir</button>
+                <div class="spacer"></div>
+            </form>
+        </div>
+    {% endif %}
+
+{% endblock %}

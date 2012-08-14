@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Películas</title>
+<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/site_media/style.css" type="text/css" media="screen" />
+
+<script type="text/javascript" src="/site_media/jquery.js"></script>
+<script type="text/javascript" src="/site_media/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+<link rel="stylesheet" href="/site_media/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
+<script type="text/javascript">
+    $(function() {
+        $('a.lightbox').fancybox({
+            'transitionIn'	:	'elastic',
+            'transitionOut'	:	'elastic',
+            'speedIn'		:	600,
+            'speedOut'		:	200,
+            'overlayShow'	:	true,
+            'titlePosition'	:	'inside'
+        });
+    });
+</script>
+{% block head %} {% endblock %}
+</head>
+
+<body>
+<header>
+    <h1>Películas</h1>
+    <form action="/search/" method="get"><input name="q" type="text"></form>
+    <nav>
+        <ul>
+            <li><a href="{% url peliculas.views.index %}">Inicio</a></li>
+            <li><a href="{% url peliculas.views.tabla %}">Tabla</a></li>
+            {% if perms.peliculas.add %}
+                <li><a href="{% url peliculas.views.add %}">Añadir</a></li>
+            {% endif %}
+            <li><a href="#">Admin</a></li>
+        </ul>
+    </nav>
+    <div id="login">
+        <a href="">Entrar</a> | <a href="">Regístrate</a>
+    </div>
+</header>
+<div class="clear"></div>
+
+<div id="contenido">
+    <section>
+        {% block contenido %} {% endblock %}
+    </section>
+</div>
+
+</body>
+</html>

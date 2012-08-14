@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block head %}
+    <script type="text/javascript" src="/site_media/jqueryui/jquery-ui-1.8.14.custom.min.js"></script>
+    <script type="text/javascript" src="/site_media/instant.js"></script>
+    <link rel="stylesheet" href="/site_media/jqueryui/css/ui-darkness/jquery-ui-1.8.14.custom.css" type="text/css" media="screen" />
+
+    <style>
+	#gallery { float: left; width: 65%; min-height: 12em; } * html #gallery { height: 12em; } /* IE6 */
+	.gallery.custom-state-active { background: #eee; }
+	.gallery li { float: left; width: 96px; padding: 0.4em; margin: 0 0.4em 0.4em 0; text-align: center; }
+	.gallery li h5 { margin: 0 0 0.4em; cursor: move; }
+	.gallery li a { float: right; }
+	.gallery li a.ui-icon-zoomin { float: left; }
+	.gallery li img { width: 100%; cursor: move; }
+
+	#trash { float: right; width: 32%; min-height: 18em; padding: 1%;} * html #trash { height: 18em; } /* IE6 */
+	#trash h4 { line-height: 16px; margin: 0 0 0.4em; }
+	#trash h4 .ui-icon { float: left; }
+	#trash .gallery h5 { display: none; }
+
+    #lateral{width: 600px; float: left; min-height: 12em;}
+    #lista{margin-left: 610px; min-height: 30em;background-color: #444444;}
+	</style>
+    <script>
+	$(function() {
+		// there's the gallery and the trash
+
+	});
+	</script>
+{% endblock %}
+{% block contenido %}
+    <h2 id="{{ lista.id }}">Editar lista {{ lista.nombre }}</h2>
+    
+    <div id="contenedor">
+        <div id="lateral">
+            <form method="get">
+                <input type="text" id="q" name="q" />
+            </form>
+            <div id="results"></div>
+            <div id="contenido_lista"><ul class="steps">
+                {% for r in lista.contenido.all %}<li><img src="/site_media/posters/{{ r.content_object.poster }}" width="50" /><h2>{{ r.titulo }}</h2><p>{{ r.titulo }}</p></li>{% endfor %}
+            </ul></div>
+        </div>
+        <div id="lista"><h4>Arrastra los elementos</h4><ul id="sortable" class='gallery ui-helper-reset'></ul></div>
+    </div>
+{% endblock %}

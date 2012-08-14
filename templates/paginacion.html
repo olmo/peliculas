@@ -1,0 +1,24 @@
+<div class="pagination">
+    {% if lista.has_previous %}
+        <a href="?page={{ lista.previous_page_number }}&ordenar={{ ordenar }}&genero={{ genero }}&vistas={{ vistas }}">Anterior</a>
+    {% endif %}
+
+    {% if lista.page_range_data.show_first %}
+        <a href="?page=1&ordenar={{ ordenar }}&genero={{ genero }}&vistas={{ vistas }}">1</a>
+        <span class="ellipsis">...</span>
+    {% endif %}
+    {% for i in lista.page_range_data.page_range %}
+        {% ifequal i lista.number %}
+            <font color="red">{{ i }}</font>
+        {% else %}
+            <a href="?page={{ i }}&ordenar={{ ordenar }}&genero={{ genero }}&vistas={{ vistas }}">{{ i }}</a>
+        {% endifequal %}
+    {% endfor %}
+    {% if lista.page_range_data.show_last %}
+        <span class="ellipsis">...</span>
+        <a href="?page={{ lista.paginator.num_pages }}&ordenar={{ ordenar }}&genero={{ genero }}&vistas={{ vistas }}">{{ lista.paginator.num_pages }}</a>
+    {% endif %}
+    {% if lista.has_next %}
+        <a href="?page={{ lista.next_page_number }}&ordenar={{ ordenar }}&genero={{ genero }}&vistas={{ vistas }}">Siguiente</a>
+    {% endif %}
+</div>

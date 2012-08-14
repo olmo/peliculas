@@ -1,0 +1,33 @@
+﻿{% extends 'base.html' %}
+
+{% block contenido %}
+    <h2>Buscar</h2>
+
+    <form method="get" action=".">
+        {{ form }}
+        <input type="submit" value="Buscar">
+
+        {% if query %}
+            <h3>Resultados</h3>
+
+            {% for result in page.object_list %}
+                <p>
+                    <a href="/peliculas/{{ result.object.get_absolute_url }}">{{ result.object.titulo }}</a>
+                    <a href="/peliculas/{{ result.object.get_absolute_url }}">{{ result.object.nombre }}</a>
+                </p>
+            {% empty %}
+                <p>No hay ningún resultado.</p>
+            {% endfor %}
+
+            {% if page.has_previous or page.has_next %}
+                <div>
+                    {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Anterior{% if page.has_previous %}</a>{% endif %}
+                    |
+                    {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Siguiente &raquo;{% if page.has_next %}</a>{% endif %}
+                </div>
+            {% endif %}
+        {% else %}
+            {# Show some example queries to run, maybe query syntax, something else? #}
+        {% endif %}
+    </form>
+{% endblock %}

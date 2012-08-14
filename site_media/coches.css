@@ -1,0 +1,89 @@
+body {
+    color: #444444;
+    font-family: 'trebuchet MS','Lucida sans',Arial;
+    font-size: 14px;
+    margin: 40px auto;
+    width: 600px;
+}
+table {
+    border-spacing: 0;
+    width: 100%;
+}
+.bordered {
+    border: 1px solid #CCCCCC;
+    border-radius: 6px 6px 6px 6px;
+    box-shadow: 0 1px 1px #CCCCCC;
+}
+.bordered tr:hover {
+    -moz-transition: all 0.1s ease-in-out 0s;
+    background: none repeat scroll 0 0 #FBF8E9;
+}
+.bordered td, .bordered th {
+    border-left: 1px solid #CCCCCC;
+    border-top: 1px solid #CCCCCC;
+    padding: 10px;
+    text-align: left;
+}
+.bordered th {
+    background-color: #DCE9F9;
+    background-image: -moz-linear-gradient(center top , #EBF3FC, #DCE9F9);
+    border-top: medium none;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.bordered td:first-child, .bordered th:first-child {
+    border-left: medium none;
+}
+.bordered th:first-child {
+    border-radius: 6px 0 0 0;
+}
+.bordered th:last-child {
+    border-radius: 0 6px 0 0;
+}
+.bordered th:only-child {
+    border-radius: 6px 6px 0 0;
+}
+.bordered tr:last-child td:first-child {
+    border-radius: 0 0 0 6px;
+}
+.bordered tr:last-child td:last-child {
+    border-radius: 0 0 6px 0;
+}
+.zebra td, .zebra th {
+    border-bottom: 1px solid #F2F2F2;
+    padding: 10px;
+}
+.zebra tbody tr:nth-child(2n) {
+    background: none repeat scroll 0 0 #F5F5F5;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+}
+.zebra th {
+    background-color: #EEEEEE;
+    background-image: -moz-linear-gradient(center top , #F5F5F5, #EEEEEE);
+    border-bottom: 1px solid #CCCCCC;
+    text-align: left;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.zebra th:first-child {
+    border-radius: 6px 0 0 0;
+}
+.zebra th:last-child {
+    border-radius: 0 6px 0 0;
+}
+.zebra th:only-child {
+    border-radius: 6px 6px 0 0;
+}
+.zebra tfoot td {
+    background-color: #F1F1F1;
+    border-bottom: 0 none;
+    border-top: 1px solid #FFFFFF;
+}
+.zebra tfoot td:first-child {
+    border-radius: 0 0 0 6px;
+}
+.zebra tfoot td:last-child {
+    border-radius: 0 0 6px 0;
+}
+.zebra tfoot td:only-child {
+    border-radius: 0 0 6px 6px;
+}

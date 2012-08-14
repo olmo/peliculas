@@ -1,0 +1,5 @@
+site_media/posters/
+cache/
+mysite_index/
+.idea
+settings.py

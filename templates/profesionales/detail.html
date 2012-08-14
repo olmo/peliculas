@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block contenido %}
+	<h1>{{ profesional.nombre }}</h1>
+
+    {% if profesional.direccion_set.all %}
+    <h2>Director de:</h2>
+    <p><ul>
+        {% for r in profesional.direccion_set.all %}<li><a href="{% url peliculas.views.detail r.pelicula.id %}">{{r.pelicula.titulo}}</a></li>{% endfor %}
+    </ul></p>
+    {% endif %}
+
+    {% if profesional.reparto_set.all %}
+    <h2>Ha actuado en:</h2>
+    <p><ul>
+        {% for r in profesional.reparto_set.all %}<li><a href="{% url peliculas.views.detail r.pelicula.id %}">{{r.pelicula.titulo}}</a></li>{% endfor %}
+    </ul></p>
+    {% endif %}
+
+    {% if profesional.guion_set.all %}
+    <h2>Ha escrito:</h2>
+    <p><ul>
+        {% for r in profesional.guion_set.all %}<li><a href="{% url peliculas.views.detail r.pelicula.id %}">{{r.pelicula.titulo}}</a></li>{% endfor %}
+    </ul></p>
+    {% endif %}
+
+    {% if profesional.musica_set.all %}
+    <h2>Ha compuesto</h2>
+    <p><ul>
+        {% for r in profesional.musica_set.all %}<li><a href="{% url peliculas.views.detail r.pelicula.id %}">{{r.pelicula.titulo}}</a></li>{% endfor %}
+    </ul></p>
+    {% endif %}
+
+    {% if profesional.fotografia_set.all %}
+    <h2>Director de fotografía:</h2>
+    <p><ul>
+        {% for r in profesional.fotografia_set.all %}<li><a href="{% url peliculas.views.detail r.pelicula.id %}">{{r.pelicula.titulo}}</a></li>{% endfor %}
+    </ul></p>
+    {% endif %}
+{% endblock %}

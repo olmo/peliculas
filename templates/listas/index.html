@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block contenido %}
+    <h2>Mis listas</h2>
+    <ul>
+    {% for lista in listas %}
+        <li><a href="/listas/{{ lista.id }}"></a>{{ lista.nombre }}</li>
+    {% endfor %}
+    </ul>
+    <h2>Añadir lista</h2>
+    <form name='add' method="post" action="/listas/add/">
+        <input type="text" name="nombre">
+        <textarea name="descripcion"></textarea>
+        <input type="hidden" id="id_usuario" name="usuario" value="{{ user.id }}" />
+    <input type="submit" value="Enviar">
+    </form>
+{% endblock %}
