@@ -3,3 +3,4 @@ cache/
 mysite_index/
 .idea
 settings.py
+*.pyc
