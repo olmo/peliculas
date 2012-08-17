@@ -33,7 +33,7 @@
 <body>
 <header>
     <h1>Películas</h1>
-    <form id="buscar" action="/search/" method="get"><input name="q" type="text"></form>
+    <form id="buscar" action="{% url inicio %}search" method="get"><input name="q" type="text"></form>
     <nav>
         <ul>
             <li><a href="{% url peliculas.views.index %}">Inicio</a></li>
