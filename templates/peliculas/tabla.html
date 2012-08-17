@@ -30,7 +30,7 @@
         <tbody> 
         {% for item in lista %}
             <tr>
-                <td class="titulo"><a href="{% url peliculas.views.detail item.id %}">{{ item.titulo }}</a></td>
+                <td><a href="{% url peliculas.views.detail item.id %}">{{ item.titulo }}</a></td>
                 <td>{% for r in item.direccion.all %}<a href="{% url profesionales.views.detail r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</td>
                 <td class="anno">{{ item.anno }}</td>
             </tr>

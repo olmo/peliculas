@@ -4,7 +4,7 @@
     <script type="text/javascript" src="/site_media/vista.js"></script>
 {% endblock %}
 {% block contenido %}
-    <form action="{%  url peliculas.views.index %}" method="get">{% csrf_token %}
+    <form class="filtro" action="{%  url peliculas.views.index %}" method="get">{% csrf_token %}
         {{ filtro.ordenar.label_tag }}: {{ filtro.ordenar }}
 		{{ filtro.genero.label_tag }}: {{ filtro.genero }}
 	    {% if user.is_authenticated %}
@@ -30,7 +30,7 @@
                 </center>
             </div>
             <div class="principal">
-                <div class="titulo">{{ item.titulo }} ({{ item.anno }})</div>
+                <div class="titulo"><a href="{% url peliculas.views.detail item.id %}">{{ item.titulo }} ({{ item.anno }})</a></div>
                 <div class="parte"><b>DIRECTOR:</b>	{% for r in item.direccion.all %}<a href="{% url profesionales.views.detail r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
                 <div class="parte"><b>GENERO:</b> {% for r in item.genero.all %}{{r.nombre}}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
                 <div class="parte"><b>REPARTO:</b> {% for r in item.reparto.all %}<a href="{% url profesionales.views.detail r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
