@@ -20,7 +20,7 @@
             </center>
         </div>
         <div class="principal">
-            <div class="titulo"><a href="{% url peliculas.views.detail item.id %}">{{ item.titulo }} ({{ item.anno }})</a></div>
+            <div class="titulo">{{ item.titulo }} ({{ item.anno }})</div>
             <div class="parte"><b>DURACIÓN:</b> {{ item.duracion }} minutos.</div>
             <div class="parte"><b>PAÍS:</b> {{ item.pais }}</div>
             <div class="parte"><b>DIRECTOR:</b>	{% for r in item.direccion.all %}<a href="{% url profesionales.views.detail r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>

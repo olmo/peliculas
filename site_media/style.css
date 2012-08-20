@@ -247,6 +247,11 @@ article img {
     width:750px;
 }
 
+.titulo {
+    color:#A50336;
+    font: bold 20px Arial, Helvetica, sans-serif;
+}
+
 .titulo a{
     color:#A50336;
     font: bold 20px Arial, Helvetica, sans-serif;
