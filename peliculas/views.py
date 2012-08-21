@@ -346,7 +346,7 @@ def autocompletar(request):
 
     for i in query:
         if i.content_type()=='peliculas.pelicula':
-            peliculas += '<a href="'+i.object.get_absolute_url()+'">\n'
+            peliculas += '<a href="/peliculas'+i.object.get_absolute_url()+'">\n'
             peliculas += '<img src="/site_media/posters/thumbs/'+i.object.poster+'" height="45px" />\n'
             peliculas += '<span class="searchheading">'+i.object.titulo+'</span>\n'
             peliculas += '<span>'
@@ -358,7 +358,7 @@ def autocompletar(request):
             npel += 1
 
         elif i.content_type()=='profesionales.profesional':
-            profesionales += '<a href="'+i.object.get_absolute_url()+'">\n'
+            profesionales += '<a href="/peliculas'+i.object.get_absolute_url()+'">\n'
             profesionales += '<span class="searchheading">'+i.object.nombre+'</span>\n'
             profesionales += '</a>\n'
 

@@ -33,7 +33,7 @@
             if(inputString.length == 0) {
                 $('#suggestions').fadeOut(); // Hide the suggestions box
             } else {
-                $.get("/peliculas/ajax/", {q: ""+inputString+""}, function(data) { // Do an AJAX call
+                $.get("/peliculas/peliculas/ajax/", {q: ""+inputString+""}, function(data) { // Do an AJAX call
                     $('#suggestions').fadeIn(); // Show the suggestions box
                     $('#suggestions').html(data); // Fill the suggestions box
                 });
