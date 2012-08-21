@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
-from peliculas.models import Pelicula, PeliculaForm, Genero, Reparto, Direccion, Musica, Fotografia, Guion, Vista, Categoria
+from peliculas.models import Pelicula, Genero, Reparto, Direccion, Musica, Fotografia, Guion, Vista, Categoria
 from profesionales.models import Profesional
 from BeautifulSoup import BeautifulSoup
 from urllib2 import urlopen
@@ -13,6 +13,8 @@ from filtro import FiltroForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from PIL import Image
+from haystack.query import SearchQuerySet
+from django.http import HttpResponse
 
 def index(request):
     ordenar = request.GET.get('ordenar', 'id')
@@ -330,3 +332,45 @@ def obtener_posters(request):
             num = num+1
 
     return render_to_response('peliculas/posters.html', {'num': num}, context_instance=RequestContext(request))
+
+def autocompletar(request):
+    query = SearchQuerySet().autocomplete(titulo_auto=request.GET.get('q', ''))[:4]
+
+    salida = ''
+    salida += '<p id="searchresults">'
+
+    peliculas = u'<span class="category">Películas</span>\n'
+    profesionales = '<span class="category">Profesionales</span>'
+    npel = 0
+    npro = 0
+
+    for i in query:
+        if i.content_type()=='peliculas.pelicula':
+            peliculas += '<a href="'+i.object.get_absolute_url()+'">\n'
+            peliculas += '<img src="/site_media/posters/thumbs/'+i.object.poster+'" height="45px" />\n'
+            peliculas += '<span class="searchheading">'+i.object.titulo+'</span>\n'
+            peliculas += '<span>'
+            for dir in i.object.direccion.all():
+                peliculas += dir.nombre + ' '
+            peliculas += '</span>\n'
+            peliculas += '</a>\n'
+
+            npel += 1
+
+        elif i.content_type()=='profesionales.profesional':
+            profesionales += '<a href="'+i.object.get_absolute_url()+'">\n'
+            profesionales += '<span class="searchheading">'+i.object.nombre+'</span>\n'
+            profesionales += '</a>\n'
+
+            npro += 1
+
+    if npel>0:
+        salida += peliculas
+    if npro>0:
+        salida += profesionales
+    salida += '</p>'
+
+    if npel+npro==0:
+        salida = ''
+
+    return HttpResponse(salida,mimetype="text/plain")
