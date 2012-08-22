@@ -3,7 +3,7 @@ $(document).ready(function(){
         var dataString = 'id='+ this.id;
         $.ajax({
             type: "GET",
-            url: "http://localhost:8000/peliculas/vista/",
+            url: "http://1984.dyndns.org/peliculas/vista/",
             data: dataString
         });
         var src = this.src;
