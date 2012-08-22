@@ -380,7 +380,7 @@ p.error { position: absolute; bottom: 48px; right: 20px; width: 262px; color: #F
 p.error span { display: inline-block; background: #D43636; padding: 6px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;  }
 .txt-fld input:focus, .txt-fld textarea:focus { background-color: #FAF9DC; }
         
-button {
+.boton button {
 	float: right;
 	font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 	background: #3F9D4A; 
@@ -416,3 +416,88 @@ button {
 .ac_results li a:hover{color:#000}
 .ac_results li:hover{background-color:#FFFFF0;color:#fb0}
 .ac_results li a img{width:40px; height:auto; max-height:50px;float:left; margin-right:15px;}
+
+#addpelicula label {
+    display:block;
+    margin-top:20px;
+    letter-spacing:1px;
+	font-weight: bold;
+	font-size:1.1em;
+}
+
+#addpelicula input, textarea {
+    width:400px;
+    height:20px;
+    background:#efefef;
+    border:1px solid #dedede;
+    padding:10px;
+    margin-top:3px;
+    font-size:1em;
+    color:#3a3a3a;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+	
+	outline:none;
+}
+
+#addpelicula textarea {
+	height:150px;
+	width:840px;
+}
+
+#addpelicula input:focus, textarea:focus {
+    border:1px solid #97d6eb;
+	color:#000;
+}
+
+#buscarpelicula label {
+    margin-top:20px;
+	margin-right:10px;
+    letter-spacing:1px;
+	font-weight: bold;
+	font-size:1.1em;
+}
+
+#buscarpelicula input {
+    width:700px;
+    height:20px;
+    background:#efefef;
+    border:1px solid #dedede;
+    padding:10px;
+    margin-top:3px;
+    font-size:1em;
+    color:#3a3a3a;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+	margin-right:15px;
+	outline:none;
+}
+
+#buscarpelicula input:focus {
+    border:1px solid #97d6eb;
+	color:#000;
+}
+
+#buscarpelicula button {
+	font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	background: #3F9D4A; 
+	border: none;
+	width: auto;
+	overflow: visible;
+	font-size: 1.4em;
+	color: #FFF;
+	padding: 7px 10px;  border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; font-weight: bold; text-shadow: 0 1px 0 rgba(0,0,0,0.4);}
+
+.tabla {
+	display: table;
+	width: 100%;
+	margin-left:10px;
+}
+
+.col {
+	display: table-cell;
+	table-layout:fixed;
+}
+

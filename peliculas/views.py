@@ -15,6 +15,7 @@ from django.contrib.auth.models import User
 from PIL import Image
 from haystack.query import SearchQuerySet
 from django.http import HttpResponse
+from django.conf import settings
 
 def index(request):
     ordenar = request.GET.get('ordenar', 'id')
@@ -205,6 +206,7 @@ def obtener(url):
     d['genero'] = r.sub('',d['genero'])
     r = re.compile('\t*')
     d['genero'] = r.sub('',d['genero'])
+    d['genero'] = d['genero'].replace(' ','')
 
     try:
         d['poster'] = soup.find('a', {'class':"lightbox"})['href']
@@ -232,13 +234,13 @@ def guardar(valores):
     filename = filename.replace(u'é','e')
     filename = filename.replace(u'í','i')
     filename = filename.replace(u'ó','o')
-    urllib.urlretrieve(valores['poster'], '/home/olmo/web/site_media/posters/'+filename)
+    urllib.urlretrieve(valores['poster'], settings.SITE_MEDIA+'posters/'+filename)
 
 
-    img = Image.open('/home/olmo/web/site_media/posters/'+filename)
+    img = Image.open(settings.SITE_MEDIA+'posters/'+filename)
     size = 100, 200
     img.thumbnail(size)
-    img.save('/home/olmo/web/site_media/posters/thumbs/'+filename, "JPEG")
+    img.save(settings.SITE_MEDIA+'posters/thumbs/'+filename, "JPEG")
 
     p = Pelicula(titulo=valores['titulo'], titulo_o=valores['titulo_o'], anno=valores['anno'],
                  duracion=int(re.match(r'\d+',valores['duracion']).group()), pais = valores['pais'],
