@@ -39,7 +39,7 @@
                 if (searchTerm.length == 0){
                     $('#suggestions').fadeOut();
                 }
-                if (searchTerm.length > 3) {
+                if (searchTerm.length > 2) {
                     timeout = setTimeout(function() {
                         isLoading = true;
 
@@ -90,11 +90,8 @@
 
 <body>
 <header>
-    <h1>Películas</h1>
-    <form id="buscar" action="{% url inicio %}search" method="get">
-        <div><input id="busqueda" name="q" type="text" autocomplete="off"></div>
-        <div id="suggestions"></div>
-    </form>
+    <div id="titulo"><h1>Películas</h1></div>
+
     <nav>
         <ul>
             <li><a href="{% url peliculas.views.index %}">Inicio</a></li>
@@ -108,6 +105,10 @@
         </ul>
     </nav>
 
+    <form id="buscar" action="{% url inicio %}search" method="get">
+        <div><input id="busqueda" name="q" type="text" autocomplete="off"></div>
+        <div id="suggestions"></div>
+    </form>
 
     <div id="login">
         {% if user.is_authenticated %}

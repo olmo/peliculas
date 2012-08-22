@@ -11,7 +11,7 @@ body {
 }
 
 header {
-    display: block;
+    display: table;
     float:left;
     width:100%;
     height: 50px;
@@ -32,24 +32,41 @@ header {
     border-radius: 5px;
 
     margin-top:10px;
+	overflow: auto;
 	
 }
 
-header h1 {
-    float:left;
-    margin: 5px 30px 0 20px;
+#titulo {
+	display:table-cell;
+	table-layout:auto;
+	width:160px;
+	position:relative;
+	top:5px;
+}
 
+#titulo h1 {
+	
+    /*float:left;*/
+    
+/*padding: 5px 0px 0 20px;*/
     font: 32px 'Lobster', serif;
     color: #ff7b0d;
+	margin: 0px 0px 0px 20px;
 }
 
 header #buscar {
-    float:left;
+    /*float:left;*/
 	
-    padding-top: 14px;
+    /*padding-top: 14px;*/
 	/*overflow: hidden;*/
 	
-    display: inline-block;
+    display:table-cell;
+	table-layout:fxed;
+	margin-top:0px;
+	margin-bottom:0px;
+	
+	position:relative;
+	right: 0px;
 }
 
 header #buscar input {
@@ -83,23 +100,16 @@ header #buscar input:focus {
     width:200px;
 }
 
+nav {
+	width: 400px;
+}
+
 nav ul {
-
+	display:table-cell;
+	table-layout:auto;
     list-style-type:none;
-    margin-top:0px;
-    margin-left:-30px;
-
-    /*overflow: hidden;*/
-    display: inline-block;
-
-    /*border-radius: 4px;
--moz-border-radius: 4px;
--webkit-border-radius: 4px;
-
-box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
--moz-box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
--webkit-box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);*/
-
+	left:-50px;
+	position:relative;
 }
 
 nav li {
@@ -112,7 +122,7 @@ nav li {
     background: linear-gradient(to bottom,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 );
 
-    float: left;
+    /*float: left;*/
     list-style: none;
     padding-top:15px;
     height:35px;
@@ -163,13 +173,16 @@ nav li a:hover {
 
 header #login {
     float:right;
-    overflow: hidden;
-    display: block-inline;
-    top:-48px;
-    position:relative;
+    display:table-cell;
+	table-layout:fixed;
     margin-right:30px;
+	
+	margin-top:5px;
     color:#fff;
     text-decoration:none !important;
+	
+	position:relative;
+	top:3px;
 }
 
 header #login a {
@@ -376,7 +389,7 @@ button {
         
 .modal_close { position: absolute; top: 12px; right: 12px; display: block; width: 14px; height: 14px; background: url(images/modal_close.png); z-index: 2; }
 
-#suggestions{ position: relative; width:250px; display:none; 
+#suggestions{ position: absolute; width:250px; display:none; 
 	-webkit-transition: all 0.7s ease 0s;
     -moz-transition: all 0.7s ease 0s;
     -o-transition: all 0.7s ease 0s;
