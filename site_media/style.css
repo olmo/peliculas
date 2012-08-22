@@ -32,6 +32,7 @@ header {
     border-radius: 5px;
 
     margin-top:10px;
+	
 }
 
 header h1 {
@@ -44,7 +45,11 @@ header h1 {
 
 header #buscar {
     float:left;
+	
     padding-top: 14px;
+	/*overflow: hidden;*/
+	
+    display: inline-block;
 }
 
 header #buscar input {
@@ -79,11 +84,12 @@ header #buscar input:focus {
 }
 
 nav ul {
+
     list-style-type:none;
     margin-top:0px;
     margin-left:-30px;
 
-    overflow: hidden;
+    /*overflow: hidden;*/
     display: inline-block;
 
     /*border-radius: 4px;
@@ -371,7 +377,7 @@ button {
 .modal_close { position: absolute; top: 12px; right: 12px; display: block; width: 14px; height: 14px; background: url(images/modal_close.png); z-index: 2; }
 
 #suggestions{ position: relative; width:250px; display:none; 
--webkit-transition: all 0.7s ease 0s;
+	-webkit-transition: all 0.7s ease 0s;
     -moz-transition: all 0.7s ease 0s;
     -o-transition: all 0.7s ease 0s;
     transition: all 0.7s ease 0s;
@@ -381,11 +387,6 @@ button {
 	box-shadow: 0px 1px 4px rgba(0,0,0,0.7);
 	-webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.7);
 	-moz-box-shadow: 0 1px 4px rgba(0,0,0,0.7);
-	
-	-webkit-transition: all 0.7s ease 0s;
-    -moz-transition: all 0.7s ease 0s;
-    -o-transition: all 0.7s ease 0s;
-    transition: all 0.7s ease 0s;
 }
 .ac_results ul{list-style-position:outside;list-style:none;background:#f5f5f5;margin:0;padding:5px 10px 10px}
 .ac_results li{cursor:pointer;display:block;overflow:auto;margin:0;padding:0;border-top:1px solid #e1e1e1;}

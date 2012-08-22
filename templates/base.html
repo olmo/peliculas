@@ -10,7 +10,6 @@
     <script type="text/javascript" src="/site_media/jquery.leanModal.min.js"></script>
     <script type="text/javascript" src="/site_media/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
     <link rel="stylesheet" href="/site_media/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="/site_media/jquery.autocomplete.css" type="text/css" media="screen" />
     <script type="text/javascript">
         $(function() {
             $('a.lightbox').fancybox({
@@ -29,6 +28,42 @@
         });
     </script>
     <script type="text/javascript">
+        var timeout;
+        var delay = 300;
+        var isLoading = false;
+
+        function reloadSearch() {
+            if (!isLoading) {
+                var searchTerm = $("#busqueda").val();
+
+                if (searchTerm.length == 0){
+                    $('#suggestions').fadeOut();
+                }
+                if (searchTerm.length > 3) {
+                    timeout = setTimeout(function() {
+                        isLoading = true;
+
+                        $.get("{% url peliculas.views.autocompletar %}", {q: ""+searchTerm+""}, function(data) {
+                            $('#suggestions').fadeIn(); // Show the suggestions box
+                            $('#suggestions').html(data); // Fill the suggestions box
+                        });
+
+                        isLoading = false;
+                    }, delay);
+                }
+            }
+        }
+
+        $(function() {
+            $("#busqueda").keyup(function() {
+                if (timeout) {
+                    clearTimeout(timeout);
+                }
+                reloadSearch();
+            });
+        });
+
+
         function lookup(inputString) {
             if(inputString.length == 0) {
                 $('#suggestions').fadeOut(); // Hide the suggestions box
@@ -45,10 +80,8 @@
                 $('#suggestions').css('width','176px');
             });
             $("#buscar").focusin(function () {
-                $('#suggestions').css('width','252px');
                 $('#suggestions').fadeIn();
-
-
+                $('#suggestions').css('width','252px');
             });
         });
     </script>
@@ -59,7 +92,7 @@
 <header>
     <h1>Películas</h1>
     <form id="buscar" action="{% url inicio %}search" method="get">
-        <div><input onkeyup="lookup(this.value);" name="q" type="text" autocomplete="off"></div>
+        <div><input id="busqueda" name="q" type="text" autocomplete="off"></div>
         <div id="suggestions"></div>
     </form>
     <nav>
@@ -70,10 +103,12 @@
                 <li><a href="{% url peliculas.views.add %}">Añadir</a></li>
             {% endif %}
             {% if user.is_staff %}
-            <li><a rel="leanModal" href="{% url admin:index %}">Admin</a></li>
+                <li><a rel="leanModal" href="{% url admin:index %}">Admin</a></li>
             {% endif %}
         </ul>
     </nav>
+
+
     <div id="login">
         {% if user.is_authenticated %}
         ¡Hola {{ user.username }}! (<a href="{% url usuarios.views.logout_view %}">salir</a>)
