@@ -74,7 +74,7 @@ header #buscar input {
     border: 1px solid #d1d1d1;
     font: bold 13px Arial,Helvetica,Sans-serif;
     color: #585858;
-    width: 125px;
+    width: 200px;
     padding: 6px 15px 6px 35px;
     height:10px;
 
@@ -88,17 +88,17 @@ header #buscar input {
     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
 
-    -webkit-transition: all 0.7s ease 0s;
+    /*-webkit-transition: all 0.7s ease 0s;
     -moz-transition: all 0.7s ease 0s;
     -o-transition: all 0.7s ease 0s;
-    transition: all 0.7s ease 0s;
+    transition: all 0.7s ease 0s;*/
 
     outline: none;
 }
 
-header #buscar input:focus {
+/*header #buscar input:focus {
     width:200px;
-}
+}*/
 
 nav {
 	width: 400px;
@@ -295,6 +295,10 @@ article img {
 	text-decoration: underline;
 }
 
+/*
+	Ventanas emergentes
+*/
+
 
 #lean_overlay {
     position: fixed;
@@ -389,11 +393,15 @@ button {
         
 .modal_close { position: absolute; top: 12px; right: 12px; display: block; width: 14px; height: 14px; background: url(images/modal_close.png); z-index: 2; }
 
-#suggestions{ position: absolute; width:250px; display:none; 
-	-webkit-transition: all 0.7s ease 0s;
+
+/*
+	Autocompletar
+*/
+#suggestions{ position: absolute; width:252px; display:none; 
+	/*-webkit-transition: all 0.7s ease 0s;
     -moz-transition: all 0.7s ease 0s;
     -o-transition: all 0.7s ease 0s;
-    transition: all 0.7s ease 0s;
+    transition: all 0.7s ease 0s;*/
 }
 
 .ac_results{overflow:hidden;z-index:99999;margin:0;padding:0;
