@@ -334,43 +334,25 @@ def obtener_posters(request):
     return render_to_response('peliculas/posters.html', {'num': num}, context_instance=RequestContext(request))
 
 def autocompletar(request):
-    query = SearchQuerySet().autocomplete(titulo_auto=request.GET.get('q', ''))[:4]
+    query = SearchQuerySet().autocomplete(titulo_auto=request.GET.get('q', ''))[:5]
 
     salida = ''
-    salida += '<p id="searchresults">'
-
-    peliculas = u'<span class="category">Películas</span>\n'
-    profesionales = '<span class="category">Profesionales</span>'
-    npel = 0
-    npro = 0
+    salida += '<div class="ac_results">'
+    salida += '<ul>'
 
     for i in query:
+        salida += '<li>'
+        salida += '<a href="/peliculas'+i.object.get_absolute_url()+'">\n'
         if i.content_type()=='peliculas.pelicula':
-            peliculas += '<a href="/peliculas'+i.object.get_absolute_url()+'">\n'
-            peliculas += '<img src="/site_media/posters/thumbs/'+i.object.poster+'" height="45px" />\n'
-            peliculas += '<span class="searchheading">'+i.object.titulo+'</span>\n'
-            peliculas += '<span>'
-            for dir in i.object.direccion.all():
-                peliculas += dir.nombre + ' '
-            peliculas += '</span>\n'
-            peliculas += '</a>\n'
-
-            npel += 1
+            salida += '<img src="/site_media/posters/thumbs/'+i.object.poster+'" />\n'
+            salida += '<span>'+i.object.titulo+'</span>\n'
 
         elif i.content_type()=='profesionales.profesional':
-            profesionales += '<a href="/peliculas'+i.object.get_absolute_url()+'">\n'
-            profesionales += '<span class="searchheading">'+i.object.nombre+'</span>\n'
-            profesionales += '</a>\n'
+            salida += '<span>'+i.object.nombre+'</span>\n'
 
-            npro += 1
+        salida += '</a></li>'
 
-    if npel>0:
-        salida += peliculas
-    if npro>0:
-        salida += profesionales
-    salida += '</p>'
+    salida += '</ul></div>'
 
-    if npel+npro==0:
-        salida = ''
 
     return HttpResponse(salida,mimetype="text/plain")

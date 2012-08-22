@@ -56,9 +56,9 @@ header #buscar input {
     padding: 6px 15px 6px 35px;
     height:10px;
 
-    -webkit-border-radius: 15px;
+    /*-webkit-border-radius: 15px;
     -moz-border-radius: 15px;
-    border-radius: 15px;
+    border-radius: 15px;*/
 
     /*text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);*/
 
@@ -78,7 +78,7 @@ header #buscar input:focus {
     width:200px;
 }
 
-header ul {
+nav ul {
     list-style-type:none;
     margin-top:0px;
     margin-left:-30px;
@@ -96,7 +96,7 @@ box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
 
 }
 
-header li {
+nav li {
     background: rgb(69,72,77);
     background: -moz-linear-gradient(top,  rgba(69,72,77,1) 0%, rgba(0,0,0,1) 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(69,72,77,1)), color-stop(100%,rgba(0,0,0,1)));
@@ -113,7 +113,7 @@ header li {
     display: inline-block;
 }
 
-header li:hover{
+nav li:hover{
     background: rgb(255,168,76);
     background: -moz-linear-gradient(top,  rgba(255,168,76,1) 0%, rgba(255,123,13,1) 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,168,76,1)), color-stop(100%,rgba(255,123,13,1)));
@@ -135,7 +135,7 @@ header li:hover{
 }
 
 
-header li a {
+nav li a {
     /*margin-right:10px;
      margin-left:10px;*/
 
@@ -151,7 +151,7 @@ header li a {
     white-space:nowrap;
 }
 
-header li a:hover {
+nav li a:hover {
     color: #000;
 }
 
@@ -370,18 +370,14 @@ button {
         
 .modal_close { position: absolute; top: 12px; right: 12px; display: block; width: 14px; height: 14px; background: url(images/modal_close.png); z-index: 2; }
 
-#suggestions{ position: relative; left:15px; top:-10px; width:220px; display:none; 
-
+#suggestions{ position: relative; width:250px; display:none; 
+-webkit-transition: all 0.7s ease 0s;
+    -moz-transition: all 0.7s ease 0s;
+    -o-transition: all 0.7s ease 0s;
+    transition: all 0.7s ease 0s;
 }
-#searchresults { 
-	border-width:1px; 
-	border-color:#919191; 
-	border-style:solid; 
-	width:220px; 
-	background-color:#a0a0a0; 
-	font-size:10px; 
-	line-height:14px;
-	
+
+.ac_results{overflow:hidden;z-index:99999;margin:0;padding:0;
 	box-shadow: 0px 1px 4px rgba(0,0,0,0.7);
 	-webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.7);
 	-moz-box-shadow: 0 1px 4px rgba(0,0,0,0.7);
@@ -391,22 +387,10 @@ button {
     -o-transition: all 0.7s ease 0s;
     transition: all 0.7s ease 0s;
 }
-#searchresults a { display:block; background-color:#F7F7F7; clear:left; height:56px; text-decoration:none; }
-#searchresults a:hover { background-color:#F2E7C4; color:#000000; }
-#searchresults a img { float:left; padding:5px 10px; }
-#searchresults a span.searchheading { display:block; font-weight:bold; padding-top:5px; color:#191919; }
-#searchresults a:hover span.searchheading { color:#000000; }
-#searchresults a span { color:#555555; }
-#searchresults a:hover span { color:#000000; }
-#searchresults span.category { font-size:11px;  padding:5px; display:block; color:#000000; font-weight:bold;
-background: rgb(246,230,180); /* Old browsers */
-background: -moz-linear-gradient(top, rgba(246,230,180,1) 0%, rgba(237,144,23,1) 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(246,230,180,1)), color-stop(100%,rgba(237,144,23,1))); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top, rgba(246,230,180,1) 0%,rgba(237,144,23,1) 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top, rgba(246,230,180,1) 0%,rgba(237,144,23,1) 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top, rgba(246,230,180,1) 0%,rgba(237,144,23,1) 100%); /* IE10+ */
-background: linear-gradient(to bottom, rgba(246,230,180,1) 0%,rgba(237,144,23,1) 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6e6b4', endColorstr='#ed9017',GradientType=0 ); /* IE6-9 */
-}
-#searchresults span.seperator { float:right; padding-right:15px; margin-right:5px; background-image:url(../images/shortcuts_arrow.gif); background-repeat:no-repeat; background-position:right; }
-#searchresults span.seperator a { background-color:transparent; display:block; margin:5px; height:auto; color:#ffffff; }
+.ac_results ul{list-style-position:outside;list-style:none;background:#f5f5f5;margin:0;padding:5px 10px 10px}
+.ac_results li{cursor:pointer;display:block;overflow:auto;margin:0;padding:0;border-top:1px solid #e1e1e1;}
+.ac_results li:first-child{border:0;}
+.ac_results li a{display:block; overflow:auto; padding:10px; color:#2c2c2c;}
+.ac_results li a:hover{color:#000}
+.ac_results li:hover{background-color:#FFFFF0;color:#fb0}
+.ac_results li a img{width:40px; height:auto; max-height:50px;float:left; margin-right:15px;}
