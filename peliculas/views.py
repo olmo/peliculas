@@ -16,6 +16,7 @@ from PIL import Image
 from haystack.query import SearchQuerySet
 from django.http import HttpResponse
 from django.conf import settings
+from profesionales.views import obtenerInfoProfesional
 
 def index(request):
     ordenar = request.GET.get('ordenar', 'id')
@@ -267,7 +268,8 @@ def guardar(valores):
                 prof = Profesional.objects.get(nombre=pro)
             except :
                 prof = Profesional(nombre=pro)
-                prof.save()
+                obtenerInfoProfesional(prof)
+                #prof.save()
 
             aux = clases[i](pelicula=p, profesional=prof, orden=j)
             aux.save()

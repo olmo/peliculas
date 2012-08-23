@@ -25,6 +25,7 @@ urlpatterns = patterns('',
 
     (r'^profesionales/$', 'profesionales.views.index'),
     (r'^profesionales/(?P<profesional_id>\d+)/$', 'profesionales.views.detail'),
+    (r'^profesionales/rellenar/$', 'profesionales.views.rellenar'),
 
     (r'^login$', 'usuarios.views.login'),
     (r'^salir$', 'usuarios.views.logout_view'),

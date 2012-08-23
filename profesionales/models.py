@@ -2,8 +2,11 @@ from django.db import models
 
 class Profesional(models.Model):
     nombre = models.CharField(max_length=100)
-    fecha = models.DateField(blank=True, null=True)
+    fecha_nacimiento = models.DateField(blank=True, null=True)
+    fecha_fallecimiento = models.DateField(blank=True, null=True)
     biografia = models.TextField(blank=True)
+    lugar_nacimiento = models.CharField(max_length=100)
+    foto = models.CharField(max_length=100, blank=True)
    
     def __unicode__(self):
         return self.nombre
