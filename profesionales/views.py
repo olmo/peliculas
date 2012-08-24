@@ -25,7 +25,7 @@ def rellenar(request):
     return render_to_response('profesionales/index.html', {'lista': lista}, context_instance=RequestContext(request))
 
 def obtener(ini,fin):
-    lista = Profesional.objects.all()[ini:fin]
+    lista = Profesional.objects.filter(foto='')[ini:fin]
 
     for profesional in lista:
         if profesional.nombre!='':
@@ -38,7 +38,7 @@ def obtenerInfoProfesional(profesional):
     data = urllib2.urlopen(req).read()
     datos = json.loads(data)
 
-    if datos['total_results']==1:
+    if datos['total_results']==1 or datos['results'][0]['name']==nombre:
         id = str(datos['results'][0]['id'])
 
         req = urllib2.Request('http://api.themoviedb.org/3/person/'+id+'?api_key=d87ab3d9f54fbc7bb6c7bee9a20c8788')
