@@ -16,7 +16,7 @@ def detail(request, profesional_id):
     return render_to_response('profesionales/detail.html', {'profesional': p}, context_instance=RequestContext(request))
 
 def rellenar(request):
-    lista = Profesional.objects.all()
+    lista = Profesional.objects.all()[1620:]
 
     for profesional in lista:
         if profesional.nombre!='':
