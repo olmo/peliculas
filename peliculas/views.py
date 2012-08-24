@@ -352,6 +352,8 @@ def autocompletar(request):
             salida += '<span>'+i.object.titulo+'</span>\n'
 
         elif i.content_type()=='profesionales.profesional':
+            if i.object.foto!='':
+                salida += '<img src="/site_media/fotos/thumbs/'+i.object.foto+'" />\n'
             salida += '<span>'+i.object.nombre+'</span>\n'
 
         salida += '</a></li>'

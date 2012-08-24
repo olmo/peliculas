@@ -1,41 +1,54 @@
 {% extends "base.html" %}
 {% block contenido %}
     <article>
-        <h2>{{ profesional.nombre }}</h2>
+        <div class="lateral">
+            <a class="lightbox" title="{{ profesional.nombre }}" href="/site_media/fotos/{{ profesional.foto }}">
+                <img src="/site_media/fotos/thumbs/{{ profesional.foto }}" width="100px" alt=""></a>
+        </div>
+        <div class="principal">
+            <div class="titulo">{{ profesional.nombre }}</div>
+            <div class="parte"><b>Fecha de nacimiento:</b> {{ profesional.fecha_nacimiento }}</div>
+            {% if profesional.fecha_fallecimiento != None %}
+            <div class="parte"><b>Fecha de fallecimiento:</b> {{ profesional.fecha_fallecimiento }}</div>
+            {% endif %}
+            <div class="parte"><b>Lugar de nacimiento:</b> {{ profesional.lugar_nacimiento }}</div>
+            <div class="parte">{{ profesional.biografia }}</div>
 
-        {% if profesional.direccion_set.all %}
-        <h3>Director de:</h3>
-        <p><ul>
-            {% for r in profesional.direccion_set.all %}<li><a href="{% url peliculas.views.detail r.pelicula.id %}">{{r.pelicula.titulo}}</a></li>{% endfor %}
-        </ul></p>
-        {% endif %}
+            {% if profesional.direccion_set.all %}
+            <h3>Director de:</h3>
+            <p><ul>
+                {% for r in profesional.direccion_set.all %}<li><a href="{% url peliculas.views.detail r.pelicula.id %}">{{r.pelicula.titulo}}</a></li>{% endfor %}
+            </ul></p>
+            {% endif %}
 
-        {% if profesional.reparto_set.all %}
-        <h3>Ha actuado en:</h3>
-        <p><ul>
-            {% for r in profesional.reparto_set.all %}<li><a href="{% url peliculas.views.detail r.pelicula.id %}">{{r.pelicula.titulo}}</a></li>{% endfor %}
-        </ul></p>
-        {% endif %}
+            {% if profesional.reparto_set.all %}
+            <h3>Ha actuado en:</h3>
+            <p><ul>
+                {% for r in profesional.reparto_set.all %}<li><a href="{% url peliculas.views.detail r.pelicula.id %}">{{r.pelicula.titulo}}</a></li>{% endfor %}
+            </ul></p>
+            {% endif %}
 
-        {% if profesional.guion_set.all %}
-        <h3>Ha escrito:</h3>
-        <p><ul>
-            {% for r in profesional.guion_set.all %}<li><a href="{% url peliculas.views.detail r.pelicula.id %}">{{r.pelicula.titulo}}</a></li>{% endfor %}
-        </ul></p>
-        {% endif %}
+            {% if profesional.guion_set.all %}
+            <h3>Ha escrito:</h3>
+            <p><ul>
+                {% for r in profesional.guion_set.all %}<li><a href="{% url peliculas.views.detail r.pelicula.id %}">{{r.pelicula.titulo}}</a></li>{% endfor %}
+            </ul></p>
+            {% endif %}
 
-        {% if profesional.musica_set.all %}
-        <h3>Ha compuesto</h3>
-        <p><ul>
-            {% for r in profesional.musica_set.all %}<li><a href="{% url peliculas.views.detail r.pelicula.id %}">{{r.pelicula.titulo}}</a></li>{% endfor %}
-        </ul></p>
-        {% endif %}
+            {% if profesional.musica_set.all %}
+            <h3>Ha compuesto</h3>
+            <p><ul>
+                {% for r in profesional.musica_set.all %}<li><a href="{% url peliculas.views.detail r.pelicula.id %}">{{r.pelicula.titulo}}</a></li>{% endfor %}
+            </ul></p>
+            {% endif %}
 
-        {% if profesional.fotografia_set.all %}
-        <h3>Director de fotografía:</h3>
-        <p><ul>
-            {% for r in profesional.fotografia_set.all %}<li><a href="{% url peliculas.views.detail r.pelicula.id %}">{{r.pelicula.titulo}}</a></li>{% endfor %}
-        </ul></p>
-        {% endif %}
+            {% if profesional.fotografia_set.all %}
+            <h3>Director de fotografía:</h3>
+            <p><ul>
+                {% for r in profesional.fotografia_set.all %}<li><a href="{% url peliculas.views.detail r.pelicula.id %}">{{r.pelicula.titulo}}</a></li>{% endfor %}
+            </ul></p>
+            {% endif %}
+        </div>
+        <div class="clear"></div>
     </article>
 {% endblock %}
