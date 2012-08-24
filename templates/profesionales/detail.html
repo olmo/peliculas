@@ -12,7 +12,7 @@
             <div class="parte"><b>Fecha de fallecimiento:</b> {{ profesional.fecha_fallecimiento }}</div>
             {% endif %}
             <div class="parte"><b>Lugar de nacimiento:</b> {{ profesional.lugar_nacimiento }}</div>
-            <div class="parte">{{ profesional.biografia }}</div>
+            <div class="parte">{{ profesional.biografia|linebreaks }}</div>
 
             {% if profesional.direccion_set.all %}
             <h3>Director de:</h3>
