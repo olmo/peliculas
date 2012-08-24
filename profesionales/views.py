@@ -41,9 +41,9 @@ def obtenerInfoProfesional(profesional):
 
         if datos['biography'] is not None:
             profesional.biografia = datos['biography']
-        if datos['birthday']!='' and datos['birthday'] is not None and datos['birthday'].length>6:
+        if datos['birthday']!='' and datos['birthday'] is not None and len(datos['birthday'])>6:
             profesional.fecha_nacimiento = datos['birthday']
-        if datos['deathday']!='' and datos['deathday'] is not None and datos['deathday'].length>6:
+        if datos['deathday']!='' and datos['deathday'] is not None and len(datos['deathday'])>6:
             profesional.fecha_fallecimiento = datos['deathday']
         if datos['place_of_birth'] is not None:
             profesional.lugar_nacimiento = datos['place_of_birth']
