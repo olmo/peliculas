@@ -74,3 +74,4 @@ def obtenerInfoProfesional(profesional):
             profesional.foto = ''
 
         profesional.save()
+        print profesional.id+' '+profesional.nombre
