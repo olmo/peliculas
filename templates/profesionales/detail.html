@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 {% block contenido %}
     <article>
+        {% if profesional.foto != '' %}
         <div class="lateral">
             <a class="lightbox" title="{{ profesional.nombre }}" href="/site_media/fotos/{{ profesional.foto }}">
                 <img src="/site_media/fotos/thumbs/{{ profesional.foto }}" width="100px" alt=""></a>
         </div>
-        <div class="principal">
+
+        <div class="principal">{% endif %}
             <div class="titulo">{{ profesional.nombre }}</div>
             <div class="parte"><b>Fecha de nacimiento:</b> {{ profesional.fecha_nacimiento }}</div>
             {% if profesional.fecha_fallecimiento != None %}
@@ -48,7 +50,7 @@
                 {% for r in profesional.fotografia_set.all %}<li><a href="{% url peliculas.views.detail r.pelicula.id %}">{{r.pelicula.titulo}}</a></li>{% endfor %}
             </ul></p>
             {% endif %}
-        </div>
+        {% if profesional.foto != '' %}</div>{% endif %}
         <div class="clear"></div>
     </article>
 {% endblock %}
