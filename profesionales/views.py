@@ -19,7 +19,8 @@ def rellenar(request):
     lista = Profesional.objects.all()
 
     for profesional in lista:
-        obtenerInfoProfesional(profesional)
+        if profesional.nombre!='':
+            obtenerInfoProfesional(profesional)
 
     return render_to_response('profesionales/index.html', {'lista': lista}, context_instance=RequestContext(request))
 
@@ -52,6 +53,7 @@ def obtenerInfoProfesional(profesional):
         if profesional.foto is not None:
             filename = profesional.nombre+'.jpg'
             filename = filename.replace(' ','_')
+            filename = filename.replace('"','')
             urllib.urlretrieve('http://cf2.imgobject.com/t/p/original'+datos['profile_path'], settings.SITE_MEDIA+'fotos/'+filename)
 
             img = Image.open(settings.SITE_MEDIA+'fotos/'+filename)
