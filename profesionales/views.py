@@ -38,40 +38,47 @@ def obtenerInfoProfesional(profesional):
     data = urllib2.urlopen(req).read()
     datos = json.loads(data)
 
-    if datos['total_results']==1 or (datos['total_results']>1 and datos['results'][0]['name']==nombre):
-        id = str(datos['results'][0]['id'])
+    if datos['total_results']>1:
+        print '\nElige para '+profesional.nombre
+        cont = 0
+        for resultado in datos['total_results']:
+            print str(cont)+' - '+resultado['nombre']
 
-        req = urllib2.Request('http://api.themoviedb.org/3/person/'+id+'?api_key=d87ab3d9f54fbc7bb6c7bee9a20c8788')
-        req.add_header('Accept', 'application/json')
-        data = urllib2.urlopen(req).read()
-        datos = json.loads(data)
+        var = raw_input("Numero: ")
+        if var>-1:
+            id = str(datos['results'][var]['id'])
 
-        if datos['biography'] is not None:
-            profesional.biografia = datos['biography']
-        if datos['birthday']!='' and datos['birthday'] is not None and len(datos['birthday'])>6 and len(datos['birthday'])<11:
-            profesional.fecha_nacimiento = datos['birthday']
-        if datos['deathday']!='' and datos['deathday'] is not None and len(datos['deathday'])>6 and len(datos['deathday'])<11:
-            profesional.fecha_fallecimiento = datos['deathday']
-        if datos['place_of_birth'] is not None:
-            profesional.lugar_nacimiento = datos['place_of_birth']
+            req = urllib2.Request('http://api.themoviedb.org/3/person/'+id+'?api_key=d87ab3d9f54fbc7bb6c7bee9a20c8788')
+            req.add_header('Accept', 'application/json')
+            data = urllib2.urlopen(req).read()
+            datos = json.loads(data)
 
-        profesional.foto = datos['profile_path']
+            if datos['biography'] is not None:
+                profesional.biografia = datos['biography']
+            if datos['birthday']!='' and datos['birthday'] is not None and len(datos['birthday'])>6 and len(datos['birthday'])<11:
+                profesional.fecha_nacimiento = datos['birthday']
+            if datos['deathday']!='' and datos['deathday'] is not None and len(datos['deathday'])>6 and len(datos['deathday'])<11:
+                profesional.fecha_fallecimiento = datos['deathday']
+            if datos['place_of_birth'] is not None:
+                profesional.lugar_nacimiento = datos['place_of_birth']
 
-        if profesional.foto is not None:
-            filename = profesional.nombre+'.jpg'
-            filename = filename.replace(' ','_')
-            filename = filename.replace('"','')
-            urllib.urlretrieve('http://cf2.imgobject.com/t/p/original'+datos['profile_path'], settings.SITE_MEDIA+'fotos/'+filename)
+            profesional.foto = datos['profile_path']
 
-            img = Image.open(settings.SITE_MEDIA+'fotos/'+filename)
-            size = 100, 200
-            img.thumbnail(size)
-            img.save(settings.SITE_MEDIA+'fotos/thumbs/'+filename, "JPEG")
+            if profesional.foto is not None:
+                filename = profesional.nombre+'.jpg'
+                filename = filename.replace(' ','_')
+                filename = filename.replace('"','')
+                urllib.urlretrieve('http://cf2.imgobject.com/t/p/original'+datos['profile_path'], settings.SITE_MEDIA+'fotos/'+filename)
 
-            profesional.foto = filename
+                img = Image.open(settings.SITE_MEDIA+'fotos/'+filename)
+                size = 100, 200
+                img.thumbnail(size)
+                img.save(settings.SITE_MEDIA+'fotos/thumbs/'+filename, "JPEG")
 
-        else:
-            profesional.foto = ''
+                profesional.foto = filename
 
-        profesional.save()
-        print str(profesional.id)+' '+profesional.nombre
+            else:
+                profesional.foto = ''
+
+            profesional.save()
+            print str(profesional.id)+' '+profesional.nombre
