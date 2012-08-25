@@ -44,7 +44,7 @@ def obtenerInfoProfesional(profesional):
         for resultado in datos['total_results']:
             print str(cont)+' - '+resultado['nombre']
 
-        var = raw_input("Numero: ")
+        var = int(raw_input("Numero: "))
         if var>-1:
             id = str(datos['results'][var]['id'])
 
