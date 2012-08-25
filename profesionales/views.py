@@ -25,7 +25,7 @@ def rellenar(request):
     return render_to_response('profesionales/index.html', {'lista': lista}, context_instance=RequestContext(request))
 
 def obtener(ini,fin):
-    lista = Profesional.objects.filter(foto='')[ini:fin]
+    lista = Profesional.objects.filter(foto='').filter(fecha_nacimiento=None)[ini:fin]
 
     for profesional in lista:
         if profesional.nombre!='':
@@ -48,9 +48,9 @@ def obtenerInfoProfesional(profesional):
 
         if datos['biography'] is not None:
             profesional.biografia = datos['biography']
-        if datos['birthday']!='' and datos['birthday'] is not None and len(datos['birthday'])>6:
+        if datos['birthday']!='' and datos['birthday'] is not None and len(datos['birthday'])>6 and len(datos['birthday'])<11:
             profesional.fecha_nacimiento = datos['birthday']
-        if datos['deathday']!='' and datos['deathday'] is not None and len(datos['deathday'])>6:
+        if datos['deathday']!='' and datos['deathday'] is not None and len(datos['deathday'])>6 and len(datos['deathday'])<11:
             profesional.fecha_fallecimiento = datos['deathday']
         if datos['place_of_birth'] is not None:
             profesional.lugar_nacimiento = datos['place_of_birth']
