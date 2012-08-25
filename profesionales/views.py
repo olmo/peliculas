@@ -41,7 +41,7 @@ def obtenerInfoProfesional(profesional):
     if datos['total_results']>1:
         print '\nElige para '+profesional.nombre
         cont = 0
-        for resultado in datos['total_results']:
+        for resultado in datos['results']:
             print str(cont)+' - '+resultado['nombre']
 
         var = int(raw_input("Numero: "))
