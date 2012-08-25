@@ -41,10 +41,12 @@ def obtenerInfoProfesional(profesional):
     if datos['total_results']>1:
         print '\nElige para '+profesional.nombre
         cont = -1
+        aux=0
         for resultado in datos['results']:
             if resultado['profile_path'] is not None:
                 cont +=1
-                print str(cont)+' - '+resultado['name']+' '+str(resultado['profile_path'])
+                print str(aux)+' - '+resultado['name']+' '+str(resultado['profile_path'])
+            aux +=1
 
         if cont==-1:
             var = -1
