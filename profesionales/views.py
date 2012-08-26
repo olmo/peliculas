@@ -38,54 +38,39 @@ def obtenerInfoProfesional(profesional):
     data = urllib2.urlopen(req).read()
     datos = json.loads(data)
 
-    if datos['total_results']>1:
-        print '\nElige para '+profesional.nombre
-        cont = -1
-        aux=0
-        for resultado in datos['results']:
-            if resultado['profile_path'] is not None:
-                cont +=1
-                print str(aux)+' - '+resultado['name']+' '+str(resultado['profile_path'])
-            aux +=1
+    if datos['total_results']==1:
+        id = str(datos['results'][var]['id'])
 
-        if cont==-1:
-            var = -1
+        req = urllib2.Request('http://api.themoviedb.org/3/person/'+id+'?api_key=d87ab3d9f54fbc7bb6c7bee9a20c8788')
+        req.add_header('Accept', 'application/json')
+        data = urllib2.urlopen(req).read()
+        datos = json.loads(data)
+
+        if datos['biography'] is not None:
+            profesional.biografia = datos['biography']
+        if datos['birthday']!='' and datos['birthday'] is not None and len(datos['birthday'])>6 and len(datos['birthday'])<11:
+            profesional.fecha_nacimiento = datos['birthday']
+        if datos['deathday']!='' and datos['deathday'] is not None and len(datos['deathday'])>6 and len(datos['deathday'])<11:
+            profesional.fecha_fallecimiento = datos['deathday']
+        if datos['place_of_birth'] is not None:
+            profesional.lugar_nacimiento = datos['place_of_birth']
+
+        profesional.foto = datos['profile_path']
+
+        if profesional.foto is not None:
+            filename = profesional.nombre+'.jpg'
+            filename = filename.replace(' ','_')
+            filename = filename.replace('"','')
+            urllib.urlretrieve('http://cf2.imgobject.com/t/p/original'+datos['profile_path'], settings.SITE_MEDIA+'fotos/'+filename)
+
+            img = Image.open(settings.SITE_MEDIA+'fotos/'+filename)
+            size = 100, 200
+            img.thumbnail(size)
+            img.save(settings.SITE_MEDIA+'fotos/thumbs/'+filename, "JPEG")
+
+            profesional.foto = filename
+
         else:
-            var = int(raw_input("Numero: "))
-        if var>-1:
-            id = str(datos['results'][var]['id'])
+            profesional.foto = ''
 
-            req = urllib2.Request('http://api.themoviedb.org/3/person/'+id+'?api_key=d87ab3d9f54fbc7bb6c7bee9a20c8788')
-            req.add_header('Accept', 'application/json')
-            data = urllib2.urlopen(req).read()
-            datos = json.loads(data)
-
-            if datos['biography'] is not None:
-                profesional.biografia = datos['biography']
-            if datos['birthday']!='' and datos['birthday'] is not None and len(datos['birthday'])>6 and len(datos['birthday'])<11:
-                profesional.fecha_nacimiento = datos['birthday']
-            if datos['deathday']!='' and datos['deathday'] is not None and len(datos['deathday'])>6 and len(datos['deathday'])<11:
-                profesional.fecha_fallecimiento = datos['deathday']
-            if datos['place_of_birth'] is not None:
-                profesional.lugar_nacimiento = datos['place_of_birth']
-
-            profesional.foto = datos['profile_path']
-
-            if profesional.foto is not None:
-                filename = profesional.nombre+'.jpg'
-                filename = filename.replace(' ','_')
-                filename = filename.replace('"','')
-                urllib.urlretrieve('http://cf2.imgobject.com/t/p/original'+datos['profile_path'], settings.SITE_MEDIA+'fotos/'+filename)
-
-                img = Image.open(settings.SITE_MEDIA+'fotos/'+filename)
-                size = 100, 200
-                img.thumbnail(size)
-                img.save(settings.SITE_MEDIA+'fotos/thumbs/'+filename, "JPEG")
-
-                profesional.foto = filename
-
-            else:
-                profesional.foto = ''
-
-            profesional.save()
-            print str(profesional.id)+' '+profesional.nombre
+        profesional.save()
