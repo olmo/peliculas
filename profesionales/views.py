@@ -39,7 +39,7 @@ def obtenerInfoProfesional(profesional):
     datos = json.loads(data)
 
     if datos['total_results']==1:
-        id = str(datos['results'][var]['id'])
+        id = str(datos['results'][0]['id'])
 
         req = urllib2.Request('http://api.themoviedb.org/3/person/'+id+'?api_key=d87ab3d9f54fbc7bb6c7bee9a20c8788')
         req.add_header('Accept', 'application/json')
