@@ -73,4 +73,4 @@ def obtenerInfoProfesional(profesional):
         else:
             profesional.foto = ''
 
-        profesional.save()
+    profesional.save()
