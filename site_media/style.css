@@ -380,7 +380,7 @@ p.error { position: absolute; bottom: 48px; right: 20px; width: 262px; color: #F
 p.error span { display: inline-block; background: #D43636; padding: 6px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;  }
 .txt-fld input:focus, .txt-fld textarea:focus { background-color: #FAF9DC; }
         
-.boton button {
+.boton {
 	float: right;
 	font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 	background: #3F9D4A; 
