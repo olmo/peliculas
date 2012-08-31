@@ -9,13 +9,25 @@
         <input type="submit" value="Buscar">
 
         {% if query %}
-            <h3>Resultados</h3>
 
+            <h3>Películas</h3>
             {% for result in page.object_list %}
+                {% if result.content_type == 'peliculas.pelicula' %}
                 <p>
-                    <a href="/peliculas/{{ result.object.get_absolute_url }}">{{ result.object.titulo }}</a>
-                    <a href="/peliculas/{{ result.object.get_absolute_url }}">{{ result.object.nombre }}</a>
+                    <a href="/peliculas{{ result.object.get_absolute_url }}">{{ result.object.titulo }}</a>
                 </p>
+                {% endif %}
+            {% empty %}
+                <p>No hay ningún resultado.</p>
+            {% endfor %}
+
+            <h3>Profesionales</h3>
+            {% for result in page.object_list %}
+                {% if result.content_type == 'profesionales.profesional' %}
+                    <p>
+                        <a href="/peliculas{{ result.object.get_absolute_url }}">{{ result.object.nombre }}</a>
+                    </p>
+                {% endif %}
             {% empty %}
                 <p>No hay ningún resultado.</p>
             {% endfor %}
