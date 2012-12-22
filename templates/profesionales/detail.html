@@ -1,10 +1,60 @@
 {% extends "base.html" %}
+{% block head %}
+    <script type="text/javascript" src="/site_media/jquery.mousewheel.min.js"></script>
+    <script type="text/javascript" src="/site_media/jquery.carouFredSel-6.1.0-packed.js"></script>
+    <script type="text/javascript" src="/site_media/jquery.tipTip.minified.js"></script>
+    <link rel="stylesheet" href="/site_media/tipTip.css" type="text/css" media="screen" />
+    <script>
+    $(document).ready(function() {
+
+    // Using default configuration
+    $("#foo1").carouFredSel();
+
+    // Using custom configuration
+    $(".carousel ul").carouFredSel({
+        circular: false,
+        infinite: false,
+        auto 	: false,
+        height : 150,
+        width : 790,
+        pagination: {
+            container : function(){
+                    return $(this).parent().siblings(".pager");
+                },
+            easing : "swing"
+        } ,
+        prev	: {
+            button	: function() {
+                        return $(this).parent().siblings(".prev");
+                    },
+            items   : 1,
+            queue   : false
+        },
+        next	: {
+            button	: function() {
+                            return $(this).parent().siblings(".next");
+                        },
+            items   : 1,
+            queue   : false
+        },
+        mousewheel  : {
+            items   : 1
+        }
+    });
+
+    $(function(){
+        $(".tip").tipTip({maxWidth: "auto", edgeOffset: -8, defaultPosition: "top"});
+    });
+
+    });
+    </script>
+{% endblock %}
 {% block contenido %}
     <article>
         {% if profesional.foto != '' %}
         <div class="lateral">
             <a class="lightbox" title="{{ profesional.nombre }}" href="/site_media/fotos/{{ profesional.foto }}">
-                <img src="/site_media/fotos/thumbs/{{ profesional.foto }}" width="100px" alt=""></a>
+                <img src="/site_media/fotos/thumbs/{{ profesional.foto }}" height="100px" alt=""></a>
         </div>
 
         <div class="principal">{% endif %}
@@ -16,39 +66,79 @@
             <div class="parte"><b>Lugar de nacimiento:</b> {{ profesional.lugar_nacimiento }}</div>
             <div class="parte">{{ profesional.biografia|linebreaks }}</div>
 
-            {% if profesional.direccion_set.all %}
+            {% if profesional.direccion_anno %}
             <h3>Director de:</h3>
-            <p><ul>
-                {% for r in profesional.direccion_set.all %}<li><a href="{% url peliculas.views.detail r.pelicula.id %}">{{r.pelicula.titulo}}</a></li>{% endfor %}
-            </ul></p>
+            <div class="carousel">
+                <ul>
+                {% for r in profesional.direccion_anno %}
+                     <li><a class="tip" title="{{ r.pelicula.titulo }}" href="{% url peliculas.views.detail r.pelicula.id %}"><img src="/site_media/posters/thumbs/{{ r.pelicula.poster }}" alt=""></a></li>
+                {% endfor %}
+                </ul>
+                <div class="clearfix"></div>
+                <a class="prev" href="#"><span>prev</span></a>
+                <a class="next" href="#"><span>next</span></a>
+                <div class="pager"></div>
+            </div>
             {% endif %}
 
-            {% if profesional.reparto_set.all %}
+            {% if profesional.reparto_anno %}
             <h3>Ha actuado en:</h3>
-            <p><ul>
-                {% for r in profesional.reparto_set.all %}<li><a href="{% url peliculas.views.detail r.pelicula.id %}">{{r.pelicula.titulo}}</a></li>{% endfor %}
-            </ul></p>
+            <div class="carousel">
+                <ul>
+                    {% for r in profesional.reparto_anno %}
+                        <li><a class="tip" title="{{ r.pelicula.titulo }}" href="{% url peliculas.views.detail r.pelicula.id %}"><img src="/site_media/posters/thumbs/{{ r.pelicula.poster }}" alt=""></a></li>
+                    {% endfor %}
+                </ul>
+                <div class="clearfix"></div>
+                <a class="prev" href="#"><span>prev</span></a>
+                <a class="next" href="#"><span>next</span></a>
+                <div class="pager"></div>
+            </div>
             {% endif %}
 
-            {% if profesional.guion_set.all %}
+            {% if profesional.guion_anno %}
             <h3>Ha escrito:</h3>
-            <p><ul>
-                {% for r in profesional.guion_set.all %}<li><a href="{% url peliculas.views.detail r.pelicula.id %}">{{r.pelicula.titulo}}</a></li>{% endfor %}
-            </ul></p>
+            <div class="carousel">
+                <ul>
+                    {% for r in profesional.guion_anno %}
+                        <li><a class="tip" title="{{ r.pelicula.titulo }}" href="{% url peliculas.views.detail r.pelicula.id %}"><img src="/site_media/posters/thumbs/{{ r.pelicula.poster }}" alt=""></a></li>
+                    {% endfor %}
+                </ul>
+                <div class="clearfix"></div>
+                <a class="prev" href="#"><span>prev</span></a>
+                <a class="next" href="#"><span>next</span></a>
+                <div class="pager"></div>
+            </div>
             {% endif %}
 
-            {% if profesional.musica_set.all %}
+            {% if profesional.musica_anno %}
             <h3>Ha compuesto</h3>
-            <p><ul>
-                {% for r in profesional.musica_set.all %}<li><a href="{% url peliculas.views.detail r.pelicula.id %}">{{r.pelicula.titulo}}</a></li>{% endfor %}
-            </ul></p>
+            <div class="carousel">
+                <ul>
+                    {% for r in profesional.musica_anno %}
+                        <li><a class="tip" title="{{ r.pelicula.titulo }}" href="{% url peliculas.views.detail r.pelicula.id %}"><img src="/site_media/posters/thumbs/{{ r.pelicula.poster }}" alt=""></a></li>
+                    {% endfor %}
+                </ul>
+                <div class="clearfix"></div>
+                <a class="prev" href="#"><span>prev</span></a>
+                <a class="next" href="#"><span>next</span></a>
+                <div class="pager"></div>
+            </div>
             {% endif %}
 
-            {% if profesional.fotografia_set.all %}
+            {% if profesional.fotografia_anno %}
             <h3>Director de fotografía:</h3>
-            <p><ul>
-                {% for r in profesional.fotografia_set.all %}<li><a href="{% url peliculas.views.detail r.pelicula.id %}">{{r.pelicula.titulo}}</a></li>{% endfor %}
-            </ul></p>
+            <div class="carousel">
+                <ul>
+                    {% for r in profesional.fotografia_anno %}
+                        <li><a class="tip" title="{{ r.pelicula.titulo }}" href="{% url peliculas.views.detail r.pelicula.id %}"><img src="/site_media/posters/thumbs/{{ r.pelicula.poster }}" alt=""></a></li>
+                    {% endfor %}
+                </ul>
+                <div class="clearfix"></div>
+                <a class="prev" href="#"><span>prev</span></a>
+                <a class="next" href="#"><span>next</span></a>
+                <div class="pager"></div>
+            </div>
             {% endif %}
         {% if profesional.foto != '' %}</div>{% endif %}
         <div class="clear"></div>

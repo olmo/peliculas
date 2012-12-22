@@ -17,3 +17,24 @@ class Profesional(models.Model):
     class Meta:
         #ordering = ['nombre']
         verbose_name_plural = "profesionales"
+
+    @property
+    def direccion_anno(self):
+        return self.direccion_set.order_by('-pelicula__anno')
+
+    @property
+    def reparto_anno(self):
+        return self.reparto_set.order_by('-pelicula__anno')
+
+    @property
+    def guion_anno(self):
+        return self.guion_set.order_by('-pelicula__anno')
+
+    @property
+    def musica_anno(self):
+        return self.musica.order_by('-pelicula__anno')
+
+    @property
+    def fotografia_anno(self):
+        return self.fotografia_set.order_by('-pelicula__anno')
+

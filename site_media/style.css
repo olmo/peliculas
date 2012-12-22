@@ -501,3 +501,97 @@ p.error span { display: inline-block; background: #D43636; padding: 6px; border-
 	table-layout:fixed;
 }
 
+
+.carousel {
+    margin: 0 0 30px 0;
+    width: 800px;
+    position:relative;
+    padding-left: 40px;
+    z-index: 10;
+}
+
+.carousel ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: block;
+}
+
+.carousel li {
+    font-size: 40px;
+    color: #999;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    padding: 0;
+    margin: 6px;
+    display: block;
+    float: left;
+    position:relative;
+}
+
+.carousel img {
+    background-color: white;
+    padding: 1px;
+    margin: 7px;
+    display: block;
+    float: left;
+    height: 120px;
+    width: auto;
+    border: 5px solid #fff;
+    -webkit-box-shadow: 3px 3px 3px #777;
+    -moz-box-shadow: 3px 3px 3px #777;
+    box-shadow: 3px 3px 3px #777;
+}
+.prev, .next {
+    margin-left: 10px;
+    width:15px;
+    height:21px;
+    display:block;
+    text-indent:-999em;
+    background: transparent url('images/carousel_control.png') no-repeat 0 0;
+    position:absolute;
+    top:70px;
+}
+.prev {background-position:0 0;
+    left:-4px; }
+.prev:hover {left:-5px; }
+.prev.disabled {	background-position: 0 -100px !important;  }
+.next {
+    background-position: -18px 0;
+    right:-20px;
+}
+.next:hover { right:-21px; }
+.next.disabled {	background-position: -50px -100px !important;  }
+.prev.disabled, a.next.disabled {
+    cursor: default;
+}
+
+.prev span, a.next span {
+    display: none;
+}
+.pagination {
+    text-align: center;
+}
+.carousel .pager {
+    margin:0 auto;
+    text-align: center;
+}
+
+.carousel .pager a {
+    margin: 0 5px 0 0;
+    text-decoration: none;
+    display:inline-block;
+    width:8px;
+    height:8px;
+    background: transparent url('images/carousel_control.png') no-repeat -2px -32px;
+    text-indent:-999em;
+}
+.carousel .pager a.selected {
+    text-decoration: underline;
+    background: transparent url('images/carousel_control.png') no-repeat -12px -32px;
+}
+.clearfix {
+    float: none;
+    clear: both;
+}
