@@ -5,3 +5,4 @@ mysite_index/
 .idea
 settings.py
 *.pyc
+/debug_toolbar
