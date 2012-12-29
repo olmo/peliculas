@@ -7,6 +7,7 @@
     <form class="filtro" action="{%  url peliculas.views.index %}" method="get">
         {{ filtro.ordenar.label_tag }}: {{ filtro.ordenar }}
 		{{ filtro.genero.label_tag }}: {{ filtro.genero }}
+        {{ filtro.pais.label_tag }}: {{ filtro.pais }}
 	    {% if user.is_authenticated %}
 	        {{ filtro.vistas.label_tag }}: {{filtro.vistas}}
 	    {% endif %}

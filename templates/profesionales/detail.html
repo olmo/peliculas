@@ -66,11 +66,12 @@
             <div class="parte"><b>Lugar de nacimiento:</b> {{ profesional.lugar_nacimiento }}</div>
             <div class="parte">{{ profesional.biografia|linebreaks }}</div>
 
-            {% if profesional.direccion_anno %}
+            {% with dir=profesional.direccion_anno %}
+            {% if dir %}
             <h3>Director de:</h3>
             <div class="carousel">
                 <ul>
-                {% for r in profesional.direccion_anno %}
+                {% for r in dir %}
                      <li><a class="tip" title="{{ r.pelicula.titulo }}" href="{% url peliculas.views.detail r.pelicula.id %}"><img src="/site_media/posters/thumbs/{{ r.pelicula.poster }}" alt=""></a></li>
                 {% endfor %}
                 </ul>
@@ -80,12 +81,14 @@
                 <div class="pager"></div>
             </div>
             {% endif %}
+            {% endwith %}
 
-            {% if profesional.reparto_anno %}
+            {% with rep=profesional.reparto_anno %}
+            {% if rep %}
             <h3>Ha actuado en:</h3>
             <div class="carousel">
                 <ul>
-                    {% for r in profesional.reparto_anno %}
+                    {% for r in rep %}
                         <li><a class="tip" title="{{ r.pelicula.titulo }}" href="{% url peliculas.views.detail r.pelicula.id %}"><img src="/site_media/posters/thumbs/{{ r.pelicula.poster }}" alt=""></a></li>
                     {% endfor %}
                 </ul>
@@ -95,12 +98,14 @@
                 <div class="pager"></div>
             </div>
             {% endif %}
+            {% endwith %}
 
-            {% if profesional.guion_anno %}
+            {% with gui=profesional.guion_anno %}
+            {% if gui %}
             <h3>Ha escrito:</h3>
             <div class="carousel">
                 <ul>
-                    {% for r in profesional.guion_anno %}
+                    {% for r in gui %}
                         <li><a class="tip" title="{{ r.pelicula.titulo }}" href="{% url peliculas.views.detail r.pelicula.id %}"><img src="/site_media/posters/thumbs/{{ r.pelicula.poster }}" alt=""></a></li>
                     {% endfor %}
                 </ul>
@@ -110,12 +115,14 @@
                 <div class="pager"></div>
             </div>
             {% endif %}
+            {% endwith %}
 
-            {% if profesional.musica_anno %}
+            {% with mu=profesional.musica_anno %}
+            {% if mu %}
             <h3>Ha compuesto</h3>
             <div class="carousel">
                 <ul>
-                    {% for r in profesional.musica_anno %}
+                    {% for r in mu %}
                         <li><a class="tip" title="{{ r.pelicula.titulo }}" href="{% url peliculas.views.detail r.pelicula.id %}"><img src="/site_media/posters/thumbs/{{ r.pelicula.poster }}" alt=""></a></li>
                     {% endfor %}
                 </ul>
@@ -125,12 +132,14 @@
                 <div class="pager"></div>
             </div>
             {% endif %}
+            {% endwith %}
 
-            {% if profesional.fotografia_anno %}
+            {% with fot=profesional.fotografia_anno %}
+            {% if fot %}
             <h3>Director de fotografía:</h3>
             <div class="carousel">
                 <ul>
-                    {% for r in profesional.fotografia_anno %}
+                    {% for r in fot %}
                         <li><a class="tip" title="{{ r.pelicula.titulo }}" href="{% url peliculas.views.detail r.pelicula.id %}"><img src="/site_media/posters/thumbs/{{ r.pelicula.poster }}" alt=""></a></li>
                     {% endfor %}
                 </ul>
@@ -140,6 +149,7 @@
                 <div class="pager"></div>
             </div>
             {% endif %}
+            {% endwith %}
         {% if profesional.foto != '' %}</div>{% endif %}
         <div class="clear"></div>
     </article>
