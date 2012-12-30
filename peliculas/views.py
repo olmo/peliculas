@@ -61,39 +61,27 @@ def index(request):
     
 def tabla(request):
     genero = request.GET.get('genero', 'todos')
+    pais = request.GET.get('pais', 'todos')
     vistas = request.GET.get('vistas', 'todas')
-		
-    if vistas == 'todas':
-        if genero != 'todos':
-            lista = Pelicula.objects.filter(genero__nombre=genero)
-        else:
-            lista = Pelicula.objects.all()
-    elif vistas == 'si':
-        if genero != 'todos':
-            lista = Pelicula.objects.raw('''select peliculas_pelicula.id,peliculas_pelicula.titulo, peliculas_pelicula.titulo_o,peliculas_pelicula.anno,peliculas_pelicula.duracion,peliculas_pelicula.pais,peliculas_pelicula.produccion,peliculas_pelicula.sinopsis,peliculas_pelicula.poster from peliculas_pelicula
-            INNER JOIN peliculas_pelicula_genero ON peliculas_pelicula.id= peliculas_pelicula_genero.pelicula_id
-            INNER JOIN peliculas_genero ON peliculas_genero.id= peliculas_pelicula_genero.genero_id
-            where peliculas_pelicula.id in (select pelicula_id from peliculas_vista where usuario_id=%s)
-            and peliculas_genero.nombre = %s''', [request.user.id, genero])
-        else:
-            lista = Pelicula.objects.raw('''select peliculas_pelicula.id,peliculas_pelicula.titulo, peliculas_pelicula.titulo_o,peliculas_pelicula.anno,peliculas_pelicula.duracion,peliculas_pelicula.pais,peliculas_pelicula.produccion,peliculas_pelicula.sinopsis,peliculas_pelicula.poster from peliculas_pelicula
-            where peliculas_pelicula.id in (select pelicula_id from peliculas_vista where usuario_id=%s)''', [request.user.id])
-        lista = list(lista)
+
+    kwargs = {}
+    kwargs_ex = {}
+    if genero != 'todos':
+        kwargs['genero__nombre'] = genero
+    if pais != 'todos':
+        kwargs['pais'] = pais
+
+    inner_qs = Vista.objects.filter(usuario=request.user.id).values('pelicula')
+    if vistas == 'si':
+        kwargs['id__in'] = inner_qs
     elif vistas == 'no':
-        if genero != 'todos':
-            lista = Pelicula.objects.raw('''select peliculas_pelicula.id,peliculas_pelicula.titulo, peliculas_pelicula.titulo_o,peliculas_pelicula.anno,peliculas_pelicula.duracion,peliculas_pelicula.pais,peliculas_pelicula.produccion,peliculas_pelicula.sinopsis,peliculas_pelicula.poster from peliculas_pelicula
-            INNER JOIN peliculas_pelicula_genero ON peliculas_pelicula.id= peliculas_pelicula_genero.pelicula_id
-            INNER JOIN peliculas_genero ON peliculas_genero.id= peliculas_pelicula_genero.genero_id
-            where peliculas_pelicula.id not in(select id from peliculas_pelicula where id in (select pelicula_id from peliculas_vista where usuario_id=%s))
-            and peliculas_genero.nombre = %s''', [request.user.id, genero])
-        else:
-            lista = Pelicula.objects.raw('''select peliculas_pelicula.id,peliculas_pelicula.titulo, peliculas_pelicula.titulo_o,peliculas_pelicula.anno,peliculas_pelicula.duracion,peliculas_pelicula.pais,peliculas_pelicula.produccion,peliculas_pelicula.sinopsis,peliculas_pelicula.poster from peliculas_pelicula
-            where peliculas_pelicula.id not in(select id from peliculas_pelicula where id in (select pelicula_id from peliculas_vista where usuario_id=%s))''', [request.user.id])
-        lista = list(lista)
+        kwargs_ex['id__in'] = inner_qs
 
-    filtro = FiltroForm(initial={'genero': genero, 'vistas':vistas})
+    lista = Pelicula.objects.filter(**kwargs).exclude(**kwargs_ex).only('titulo','anno').prefetch_related('direccion')
 
-    return render_to_response('peliculas/tabla.html', {'lista': lista, 'filtro' : filtro, 'genero':genero, 'vistas':vistas}, context_instance=RequestContext(request))
+    filtro = FiltroForm(initial={'genero': genero, 'pais':pais, 'vistas':vistas})
+
+    return render_to_response('peliculas/tabla.html', {'lista': lista, 'filtro' : filtro, 'genero':genero, 'pais':pais, 'vistas':vistas}, context_instance=RequestContext(request))
 	
 def detail(request, pelicula_id):
     p = get_object_or_404(Pelicula, pk=pelicula_id)

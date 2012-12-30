@@ -14,6 +14,7 @@
 {% block contenido %}
     <form action="{%  url peliculas.views.tabla %}" method="get">{% csrf_token %}
 		{{ filtro.genero.label_tag }}: {{ filtro.genero }}
+        {{ filtro.pais.label_tag }}: {{ filtro.pais }}
 	    {% if user.is_authenticated %}
 	        {{ filtro.vistas.label_tag }}: {{filtro.vistas}}
 	    {% endif %}
