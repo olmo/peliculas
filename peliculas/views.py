@@ -22,6 +22,7 @@ def index(request):
     ordenar = request.GET.get('ordenar', 'id')
     genero = request.GET.get('genero', 'todos')
     pais = request.GET.get('pais', 'todos')
+    formato = request.GET.get('formato', 'todos')
     vistas = request.GET.get('vistas', 'todas')
 
     ord = 'peliculas_pelicula.'+ordenar
@@ -34,6 +35,8 @@ def index(request):
         kwargs['genero__nombre'] = genero
     if pais != 'todos':
         kwargs['pais'] = pais
+    if formato != 'todos':
+        kwargs['categorias__nombre'] = formato
 
     inner_qs = Vista.objects.filter(usuario=request.user.id).values('pelicula')
     if vistas == 'si':
@@ -41,6 +44,7 @@ def index(request):
     elif vistas == 'no':
         kwargs_ex['id__in'] = inner_qs
 
+    num_pelis = Pelicula.objects.filter(**kwargs).exclude(**kwargs_ex).count()
     lista = Pelicula.objects.filter(**kwargs).exclude(**kwargs_ex).prefetch_related('direccion','genero','reparto').order_by(ord)
 
     paginator = FlynsarmyPaginator(lista, 10, adjacent_pages=3)
@@ -55,13 +59,14 @@ def index(request):
     except (EmptyPage, InvalidPage):
         pelis = paginator.page(paginator.num_pages)
 
-    filtro = FiltroForm(initial={'ordenar': ordenar, 'genero': genero, 'pais': pais, 'vistas':vistas})
+    filtro = FiltroForm(initial={'ordenar': ordenar, 'genero': genero, 'pais': pais, 'formato':formato, 'vistas':vistas})
 
-    return render_to_response('peliculas/index.html', {'lista': pelis, 'filtro' : filtro, 'ordenar':ordenar, 'genero':genero, 'pais':pais, 'vistas':vistas}, context_instance=RequestContext(request))
+    return render_to_response('peliculas/index.html', {'lista': pelis, 'num_pelis':num_pelis, 'filtro' : filtro, 'ordenar':ordenar, 'genero':genero, 'pais':pais, 'formato':formato, 'vistas':vistas}, context_instance=RequestContext(request))
     
 def tabla(request):
     genero = request.GET.get('genero', 'todos')
     pais = request.GET.get('pais', 'todos')
+    formato = request.GET.get('formato', 'todos')
     vistas = request.GET.get('vistas', 'todas')
 
     kwargs = {}
@@ -70,6 +75,8 @@ def tabla(request):
         kwargs['genero__nombre'] = genero
     if pais != 'todos':
         kwargs['pais'] = pais
+    if formato != 'todos':
+        kwargs['categorias__nombre'] = formato
 
     inner_qs = Vista.objects.filter(usuario=request.user.id).values('pelicula')
     if vistas == 'si':
@@ -79,9 +86,9 @@ def tabla(request):
 
     lista = Pelicula.objects.filter(**kwargs).exclude(**kwargs_ex).only('titulo','anno').prefetch_related('direccion')
 
-    filtro = FiltroForm(initial={'genero': genero, 'pais':pais, 'vistas':vistas})
+    filtro = FiltroForm(initial={'genero': genero, 'pais':pais, 'formato':formato, 'vistas':vistas})
 
-    return render_to_response('peliculas/tabla.html', {'lista': lista, 'filtro' : filtro, 'genero':genero, 'pais':pais, 'vistas':vistas}, context_instance=RequestContext(request))
+    return render_to_response('peliculas/tabla.html', {'lista': lista, 'filtro' : filtro, 'genero':genero, 'pais':pais, 'formato':formato, 'vistas':vistas}, context_instance=RequestContext(request))
 	
 def detail(request, pelicula_id):
     p = get_object_or_404(Pelicula, pk=pelicula_id)
@@ -175,7 +182,7 @@ def obtener(url):
     d['genero'] = r.sub('',d['genero'])
     r = re.compile('\t*')
     d['genero'] = r.sub('',d['genero'])
-    d['genero'] = d['genero'].replace(' ','')
+    d['genero'] = d['genero'].replace(', ',',')
 
     try:
         d['poster'] = soup.find('a', {'class':"lightbox"})['href']

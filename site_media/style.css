@@ -595,3 +595,8 @@ p.error span { display: inline-block; background: #D43636; padding: 6px; border-
     float: none;
     clear: both;
 }
+
+.edit {
+    float: right;
+    margin-top: -25px;
+}

@@ -8,9 +8,12 @@
         {{ filtro.ordenar.label_tag }}: {{ filtro.ordenar }}
 		{{ filtro.genero.label_tag }}: {{ filtro.genero }}
         {{ filtro.pais.label_tag }}: {{ filtro.pais }}
+        {{ filtro.formato.label_tag }}: {{ filtro.formato }}
 	    {% if user.is_authenticated %}
 	        {{ filtro.vistas.label_tag }}: {{filtro.vistas}}
 	    {% endif %}
+
+        Nº películas: {{ num_pelis }}
     </form>
     
     {% include "paginacion.html" %}
@@ -23,15 +26,15 @@
                 <center>
                     {% if user.is_authenticated %}
                         {% if item|vista:user.id %}
-                            <input id="{{ item.id }}" type="image" title="Marcar como no vista" alt="Visto" src="/site_media/images/button_cancel.gif">
+                            <input id="{{ item.id }}" type="image" title="Marcar como no vista" alt="Visto" src="/site_media/images/button_cancel.gif" style="margin-top: 10px;">
                         {% else %}
-                            <input id="{{ item.id }}" type="image" title="Marcar como vista" alt="Visto" src="/site_media/images/button_ok.gif">
+                            <input id="{{ item.id }}" type="image" title="Marcar como vista" alt="Visto" src="/site_media/images/button_ok.gif" style="margin-top: 10px;">
                         {% endif %}
                     {% endif %}
                 </center>
             </div>
             <div class="principal">
-                <div class="titulo"><a href="{% url peliculas.views.detail item.id %}">{{ item.titulo }} ({{ item.anno }})</a></div>
+                <div class="titulo"><a href="{% url peliculas.views.detail item.id %}">{{ item.titulo }} ({{ item.anno }})</a></div>{% if user.is_staff %}<div class="edit"><a href="{% url admin:peliculas_pelicula_change item.id %}"><img alt="Editar" src="/site_media/images/edit.png"></a></div>{% endif %}
                 <div class="parte"><b>DIRECTOR:</b>	{% for r in item.direccion.all %}<a href="{% url profesionales.views.detail r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
                 <div class="parte"><b>GENERO:</b> {% for r in item.genero.all %}{{r.nombre}}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
                 <div class="parte"><b>REPARTO:</b> {% for r in item.reparto.all %}<a href="{% url profesionales.views.detail r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>

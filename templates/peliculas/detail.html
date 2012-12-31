@@ -12,15 +12,15 @@
             <center>
                 {% if user.is_authenticated %}
                     {% if item|vista:user.id %}
-                        <input id="{{ item.id }}" type="image" title="Marcar como no vista" alt="Visto" src="/site_media/images/button_cancel.gif">
+                        <input id="{{ item.id }}" type="image" title="Marcar como no vista" alt="Visto" src="/site_media/images/button_cancel.gif" style="margin-top: 10px;">
                     {% else %}
-                        <input id="{{ item.id }}" type="image" title="Marcar como vista" alt="Visto" src="/site_media/images/button_ok.gif">
+                        <input id="{{ item.id }}" type="image" title="Marcar como vista" alt="Visto" src="/site_media/images/button_ok.gif" style="margin-top: 10px;">
                     {% endif %}
                 {% endif %}
             </center>
         </div>
         <div class="principal">
-            <div class="titulo">{{ item.titulo }} ({{ item.anno }})</div>
+            <div class="titulo">{{ item.titulo }} ({{ item.anno }})</div>{% if user.is_staff %}<div class="edit"><a href="{% url admin:peliculas_pelicula_change item.id %}"><img alt="Editar" src="/site_media/images/edit.png"></a></div>{% endif %}
             <div class="parte"><b>DURACIÓN:</b> {{ item.duracion }} minutos.</div>
             <div class="parte"><b>PAÍS:</b> {{ item.pais }}</div>
             <div class="parte"><b>DIRECTOR:</b>	{% for r in item.direccion.all %}<a href="{% url profesionales.views.detail r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
