@@ -600,3 +600,8 @@ p.error span { display: inline-block; background: #D43636; padding: 6px; border-
     float: right;
     margin-top: -25px;
 }
+
+.edit img{
+    border: 0;
+    padding: 0;
+}
