@@ -2,7 +2,7 @@
 {% block contenido %}
     <article>
     {% if apartado == 0 %}
-        <form id="buscarpelicula" action="{% url peliculas.views.add %}" method="post">
+        <form id="buscarpelicula" action="{% url 'peliculas.views.add' %}" method="post">
             {% csrf_token %}
             <label>Título</label><input type="text" name="nombre" />
             <input type="hidden" name="apartado" value="1" />
@@ -11,7 +11,7 @@
     {% endif %}
 
     {% if apartado == 1 %}
-        <form action="{% url peliculas.views.add %}" method="post">
+        <form action="{% url 'peliculas.views.add' %}" method="post">
             {% csrf_token %}
             {% for v,k in resultados.iteritems %}
                 <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ v }}" />
@@ -25,7 +25,7 @@
     {% if apartado == 2 %}
             <h2>Añadir Película</h2>
 
-        <form id="addpelicula" action="{% url peliculas.views.add %}" method="post">
+        <form id="addpelicula" action="{% url 'peliculas.views.add' %}" method="post">
             {% csrf_token %}
             <div class="tabla">
                 <div class="col">

@@ -20,16 +20,16 @@
             </center>
         </div>
         <div class="principal">
-            <div class="titulo">{{ item.titulo }} ({{ item.anno }})</div>{% if user.is_staff %}<div class="edit"><a href="{% url admin:peliculas_pelicula_change item.id %}"><img alt="Editar" src="/site_media/images/edit.png"></a></div>{% endif %}
+            <div class="titulo">{{ item.titulo }} ({{ item.anno }})</div>{% if user.is_staff %}<div class="edit"><a href="{% url 'admin:peliculas_pelicula_change' item.id %}"><img alt="Editar" src="/site_media/images/edit.png"></a></div>{% endif %}
             <div class="parte"><b>DURACIÓN:</b> {{ item.duracion }} minutos.</div>
             <div class="parte"><b>PAÍS:</b> {{ item.pais }}</div>
-            <div class="parte"><b>DIRECTOR:</b>	{% for r in item.direccion.all %}<a href="{% url profesionales.views.detail r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-            <div class="parte"><b>GUIÓN:</b> {% for r in item.guion.all %}<a href="{% url profesionales.views.detail r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-            <div class="parte"><b>MÚSICA:</b> {% for r in item.musica.all %}<a href="{% url profesionales.views.detail r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-            <div class="parte"><b>FOTOGRAFÍA:</b> {% for r in item.fotografia.all %}<a href="{% url profesionales.views.detail r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+            <div class="parte"><b>DIRECTOR:</b>	{% for r in item.direccion.all %}<a href="{% url 'profesionales.views.detail' r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+            <div class="parte"><b>GUIÓN:</b> {% for r in item.guion.all %}<a href="{% url 'profesionales.views.detail' r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+            <div class="parte"><b>MÚSICA:</b> {% for r in item.musica.all %}<a href="{% url 'profesionales.views.detail' r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+            <div class="parte"><b>FOTOGRAFÍA:</b> {% for r in item.fotografia.all %}<a href="{% url 'profesionales.views.detail' r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
             <div class="parte"><b>PRODUCCIÓN:</b> {{ item.produccion }}</div>
             <div class="parte"><b>GENERO:</b> {% for r in item.genero.all %}{{r.nombre}}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-            <div class="parte"><b>REPARTO:</b> {% for r in item.reparto.all %}<a href="{% url profesionales.views.detail r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+            <div class="parte"><b>REPARTO:</b> {% for r in item.reparto.all %}<a href="{% url 'profesionales.views.detail' r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
             <div class="parte"><b>SINOPSIS:</b> {{ item.sinopsis }}</div>
         </div>
         <div class="clear"></div>

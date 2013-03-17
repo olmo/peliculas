@@ -43,7 +43,7 @@
                     timeout = setTimeout(function() {
                         isLoading = true;
 
-                        $.get("{% url peliculas.views.autocompletar %}", {q: ""+searchTerm+""}, function(data) {
+                        $.get("{% url 'peliculas.views.autocompletar' %}", {q: ""+searchTerm+""}, function(data) {
                             $('#suggestions').fadeIn(); // Show the suggestions box
                             $('#suggestions').html(data); // Fill the suggestions box
                         });
@@ -68,7 +68,7 @@
             if(inputString.length == 0) {
                 $('#suggestions').fadeOut(); // Hide the suggestions box
             } else {
-                $.get("{% url peliculas.views.autocompletar %}", {q: ""+inputString+""}, function(data) { // Do an AJAX call
+                $.get("{% url 'peliculas.views.autocompletar' %}", {q: ""+inputString+""}, function(data) { // Do an AJAX call
                     $('#suggestions').fadeIn(); // Show the suggestions box
                     $('#suggestions').html(data); // Fill the suggestions box
                 });
@@ -94,25 +94,25 @@
 
     <nav>
         <ul>
-            <li><a href="{% url peliculas.views.index %}">Inicio</a></li>
-            <li><a href="{% url peliculas.views.tabla %}">Tabla</a></li>
+            <li><a href="{% url 'peliculas.views.index' %}">Inicio</a></li>
+            <li><a href="{% url 'peliculas.views.tabla' %}">Tabla</a></li>
             {% if perms.peliculas.add %}
-                <li><a href="{% url peliculas.views.add %}">Añadir</a></li>
+                <li><a href="{% url 'peliculas.views.add' %}">Añadir</a></li>
             {% endif %}
             {% if user.is_staff %}
-                <li><a rel="leanModal" href="{% url admin:index %}">Admin</a></li>
+                <li><a rel="leanModal" href="{% url 'admin:index' %}">Admin</a></li>
             {% endif %}
         </ul>
     </nav>
 
-    <form id="buscar" action="{% url inicio %}search" method="get">
+    <form id="buscar" action="{% url 'inicio' %}search" method="get">
         <div><input id="busqueda" name="q" type="text" autocomplete="off"></div>
         <div id="suggestions"></div>
     </form>
 
     <div id="login">
         {% if user.is_authenticated %}
-        ¡Hola {{ user.username }}! (<a href="{% url usuarios.views.logout_view %}">salir</a>)
+        ¡Hola {{ user.username }}! (<a href="{% url 'usuarios.views.logout_view' %}">salir</a>)
         {% else %}
         <a rel="leanModal" href="#signup" class="login-window">Entrar</a> | <a rel="leanModal" href="#registro">Regístrate</a>
         <div id="signup" style="display: none; position: fixed; opacity: 1; z-index: 11000; left: 50%; margin-left: -202px; top: 200px; ">
@@ -123,7 +123,7 @@
                     <a class="modal_close" href="#"></a>
                 </div>
 
-                <form action="{% url usuarios.views.login %}" method="post">
+                <form action="{% url 'usuarios.views.login' %}" method="post">
                     {% csrf_token %}
                     <div class="txt-fld">
                         <label for="username">Usuario</label>
@@ -147,7 +147,7 @@
                     <a class="modal_close" href="#"></a>
                 </div>
 
-                <form action="{% url usuarios.views.registro %}" method="post">
+                <form action="{% url 'usuarios.views.registro' %}" method="post">
                     {% csrf_token %}
                     <div class="txt-fld">
                         <label for="username2">Usuario</label>

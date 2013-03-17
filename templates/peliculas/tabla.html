@@ -12,7 +12,7 @@
     </script>
 {% endblock %}
 {% block contenido %}
-    <form action="{%  url peliculas.views.tabla %}" method="get">{% csrf_token %}
+    <form action="{%  url 'peliculas.views.tabla' %}" method="get">{% csrf_token %}
 		{{ filtro.genero.label_tag }}: {{ filtro.genero }}
         {{ filtro.pais.label_tag }}: {{ filtro.pais }}
         {{ filtro.formato.label_tag }}: {{ filtro.formato }}
@@ -32,8 +32,8 @@
         <tbody> 
         {% for item in lista %}
             <tr>
-                <td><a href="{% url peliculas.views.detail item.id %}">{{ item.titulo }}</a></td>
-                <td>{% for r in item.direccion.all %}<a href="{% url profesionales.views.detail r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+                <td><a href="{% url 'peliculas.views.detail' item.id %}">{{ item.titulo }}</a></td>
+                <td>{% for r in item.direccion.all %}<a href="{% url 'profesionales.views.detail' r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</td>
                 <td class="anno">{{ item.anno }}</td>
             </tr>
         {% endfor %}

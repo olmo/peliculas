@@ -72,7 +72,7 @@
             <div class="carousel">
                 <ul>
                 {% for r in dir %}
-                     <li><a class="tip" title="{{ r.pelicula.titulo }}" href="{% url peliculas.views.detail r.pelicula.id %}"><img src="/site_media/posters/thumbs/{{ r.pelicula.poster }}" alt=""></a></li>
+                     <li><a class="tip" title="{{ r.pelicula.titulo }}" href="{% url 'peliculas.views.detail' r.pelicula.id %}"><img src="/site_media/posters/thumbs/{{ r.pelicula.poster }}" alt=""></a></li>
                 {% endfor %}
                 </ul>
                 <div class="clearfix"></div>
@@ -89,7 +89,7 @@
             <div class="carousel">
                 <ul>
                     {% for r in rep %}
-                        <li><a class="tip" title="{{ r.pelicula.titulo }}" href="{% url peliculas.views.detail r.pelicula.id %}"><img src="/site_media/posters/thumbs/{{ r.pelicula.poster }}" alt=""></a></li>
+                        <li><a class="tip" title="{{ r.pelicula.titulo }}" href="{% url 'peliculas.views.detail' r.pelicula.id %}"><img src="/site_media/posters/thumbs/{{ r.pelicula.poster }}" alt=""></a></li>
                     {% endfor %}
                 </ul>
                 <div class="clearfix"></div>
@@ -106,7 +106,7 @@
             <div class="carousel">
                 <ul>
                     {% for r in gui %}
-                        <li><a class="tip" title="{{ r.pelicula.titulo }}" href="{% url peliculas.views.detail r.pelicula.id %}"><img src="/site_media/posters/thumbs/{{ r.pelicula.poster }}" alt=""></a></li>
+                        <li><a class="tip" title="{{ r.pelicula.titulo }}" href="{% url 'peliculas.views.detail' r.pelicula.id %}"><img src="/site_media/posters/thumbs/{{ r.pelicula.poster }}" alt=""></a></li>
                     {% endfor %}
                 </ul>
                 <div class="clearfix"></div>
@@ -123,7 +123,7 @@
             <div class="carousel">
                 <ul>
                     {% for r in mu %}
-                        <li><a class="tip" title="{{ r.pelicula.titulo }}" href="{% url peliculas.views.detail r.pelicula.id %}"><img src="/site_media/posters/thumbs/{{ r.pelicula.poster }}" alt=""></a></li>
+                        <li><a class="tip" title="{{ r.pelicula.titulo }}" href="{% url 'peliculas.views.detail' r.pelicula.id %}"><img src="/site_media/posters/thumbs/{{ r.pelicula.poster }}" alt=""></a></li>
                     {% endfor %}
                 </ul>
                 <div class="clearfix"></div>
@@ -140,7 +140,7 @@
             <div class="carousel">
                 <ul>
                     {% for r in fot %}
-                        <li><a class="tip" title="{{ r.pelicula.titulo }}" href="{% url peliculas.views.detail r.pelicula.id %}"><img src="/site_media/posters/thumbs/{{ r.pelicula.poster }}" alt=""></a></li>
+                        <li><a class="tip" title="{{ r.pelicula.titulo }}" href="{% url 'peliculas.views.detail' r.pelicula.id %}"><img src="/site_media/posters/thumbs/{{ r.pelicula.poster }}" alt=""></a></li>
                     {% endfor %}
                 </ul>
                 <div class="clearfix"></div>

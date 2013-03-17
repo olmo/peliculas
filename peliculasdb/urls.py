@@ -1,8 +1,8 @@
-from django.conf.urls.defaults import patterns, include, url
+from django.conf.urls import patterns, include, url
 from django.contrib import admin
 import os
 site_media = os.path.join(
-    os.path.dirname(__file__),  'site_media'
+    os.path.dirname(__file__), '../site_media'
 ) 
 admin.autodiscover()
 
@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-	(r'^peliculas/$', 'peliculas.views.index'),
+    (r'^peliculas/$', 'peliculas.views.index'),
     (r'^peliculas/(?P<pelicula_id>\d+)/$', 'peliculas.views.detail'),
     (r'^peliculas/add/$', 'peliculas.views.add'),
     (r'^peliculas/tabla/$', 'peliculas.views.tabla'),
@@ -36,6 +36,6 @@ urlpatterns = patterns('',
     (r'^ajax_select/', include('ajax_select.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-	(r'^site_media/(?P<path>.*)$', 'django.views.static.serve',
-          {'document_root': site_media}), 
+    (r'^site_media/(?P<path>.*)$', 'django.views.static.serve',
+        {'document_root': site_media}),
 )
