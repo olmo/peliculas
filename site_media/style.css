@@ -214,7 +214,7 @@ div.clear { clear: both; }
 section {
     background:#F8F8F8;
     margin:30px 40px 30px 40px;
-
+    padding-bottom: 10px;
 }
 
 .filtro {
@@ -223,7 +223,7 @@ section {
 	text-align: center;
 }
 
-section .pagination{
+/*section .pagination{
     padding-bottom:10px;
 	text-align: center;
 }
@@ -232,7 +232,88 @@ section .pagination a{
     font: normal 18px Georgia, Arial, Helvetica, sans-serif;
     text-decoration:none;
     color:#333;
+}*/
+
+.pagination {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 15px;
 }
+
+.pagination .page-numbers{border:none;}
+
+.pagination .page-numbers, .pagination .page-numbers a {
+    text-decoration: none;
+    color: #717171;
+    font: bold 11px Arial, sans-serif;
+    text-shadow: 0px 1px white;
+    padding: 5px 8px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+
+    background: #f9f9f9;
+    background: -webkit-linear-gradient(top, #f9f9f9 0%, #e8e8e8 100%);
+    background: -moz-linear-gradient(top, #f9f9f9 0%, #e8e8e8 100%);
+    background: -o-linear-gradient(top, #f9f9f9 0%, #e8e8e8 100%);
+    background: -ms-linear-gradient(top, #f9f9f9 0%, #e8e8e8 100%);
+    background: linear-gradient(top, #f9f9f9 0%, #e8e8e8 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', endColorstr='#e8e8e8',GradientType=0 );
+
+    -webkit-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.35);
+    box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.35);
+}
+
+.pagination .current{
+    color: white;
+    text-shadow: 0px 1px #3f789f;
+    -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.8);
+    -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.8);
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.8);
+    background: #7cb9e5;
+    background: -webkit-linear-gradient(top, #7cb9e5 0%, #57a1d8 100%);
+    background: -moz-linear-gradient(top, #7cb9e5 0%, #57a1d8 100%);
+    background: -o-linear-gradient(top, #7cb9e5 0%, #57a1d8 100%);
+    background: -ms-linear-gradient(top, #7cb9e5 0%, #57a1d8 100%);
+    background: linear-gradient(top, #7cb9e5 0%, #57a1d8 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7cb9e5', endColorstr='#57a1d8',GradientType=0 );
+}
+
+.pagination .page-numbers:hover{
+    -webkit-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.55);
+    -moz-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.55);
+    box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.55);
+    background: #fff;
+    background: -webkit-linear-gradient(top, #fff 0%, #e8e8e8 100%);
+    background: -moz-linear-gradient(top, #fff 0%, #e8e8e8 100%);
+    background: -o-linear-gradient(top, #fff 0%, #e8e8e8 100%);
+    background: -ms-linear-gradient(top, #fff 0%, #e8e8e8 100%);
+    background: linear-gradient(top, #fff 0%, #e8e8e8 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff', endColorstr='#e8e8e8',GradientType=0 );
+    border:none;
+    color:#575757;
+}
+
+.pagination .current:active, .pagination .page-numbers:active{
+    -webkit-box-shadow: inset 0px 1px 3px 0px rgba(0,0,0,0.5), 0px 1px 1px 0px rgba(255,255,255,1) !important;
+    -moz-box-shadow: inset 0px 1px 3px 0px rgba(0,0,0,0.5), 0px 1px 1px 0px rgba(255,255,255,1) !important;
+    box-shadow: inset 0px 1px 3px 0px rgba(0,0,0,0.5), 0px 1px 1px 0px rgba(255,255,255,1) !important;
+}
+
+.pagination .current:hover{
+    -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.9);
+    -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.9);
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.9);
+    background: #99cefc;
+    background: -webkit-linear-gradient(top, #99cefc 0%, #57a1d8 100%);
+    background: -moz-linear-gradient(top, #99cefc 0%, #57a1d8 100%);
+    background: -o-linear-gradient(top, #99cefc 0%, #57a1d8 100%);
+    background: -ms-linear-gradient(top, #99cefc 0%, #57a1d8 100%);
+    background: linear-gradient(top, #99cefc 0%, #57a1d8 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#99cefc', endColorstr='#57a1d8',GradientType=0 );
+}
+
 
 article {
     padding:10px 10px 30px 10px;
@@ -570,9 +651,7 @@ p.error span { display: inline-block; background: #D43636; padding: 6px; border-
 .prev span, a.next span {
     display: none;
 }
-.pagination {
-    text-align: center;
-}
+
 .carousel .pager {
     margin:0 auto;
     text-align: center;
