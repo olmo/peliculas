@@ -4,29 +4,50 @@
     <script type="text/javascript" src="/site_media/vista.js"></script>
     <script type="text/javascript" src="/site_media/jquery.tablesorter.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function() 
-            { 
-                $("#myTable").tablesorter( {sortList: [[0,0]]} ); 
+        function getTextExtractor(){
+            return (function() {
+                var patternLetters = /[öäüÖÄÜáàâéèêúùûóòôÁÀÂÉÈÊÚÙÛÓÒÔß]/g;
+                var patternDateDmy = /^(?:\D+)?(\d{1,2})\.(\d{1,2})\.(\d{2,4})$/;
+                var lookupLetters = {
+                    "Á": "A", "É": "E", "Í": "I", "Ó": "O", "Ú": "U"
+                };
+                var letterTranslator = function(match) {
+                    return lookupLetters[match] || match;
+                }
+
+                return function(node) {
+                    var text = $.trim($(node).text());
+                    var date = text.match(patternDateDmy);
+                    if (date)
+                        return [date[3], date[2], date[1]].join("-");
+                    else
+                        return text.replace(patternLetters, letterTranslator);
+                }
+            })();
+        }
+        $(document).ready(function(){
+                $("#myTable").tablesorter( {textExtraction: getTextExtractor(), sortList: [[0,0]]} );
             } 
         );
     </script>
 {% endblock %}
 {% block contenido %}
-    <form action="{%  url 'peliculas.views.tabla' %}" method="get">{% csrf_token %}
-		{{ filtro.genero.label_tag }}: {{ filtro.genero }}
+    <form class="filtro" action="{%  url 'peliculas.views.tabla' %}" method="get">{% csrf_token %}
+        {{ filtro.genero.label_tag }}: {{ filtro.genero }}
         {{ filtro.pais.label_tag }}: {{ filtro.pais }}
         {{ filtro.formato.label_tag }}: {{ filtro.formato }}
-	    {% if user.is_authenticated %}
-	        {{ filtro.vistas.label_tag }}: {{filtro.vistas}}
-	    {% endif %}
+        {% if user.is_authenticated %}
+            {{ filtro.vistas.label_tag }}: {{filtro.vistas}}
+        {% endif %}
+        Nº películas: {{ num_pelis }}
     </form>
-    
-    <table id="myTable" class="tablesorter"> 
+
+    <table id="myTable" border="0" cellpadding="0" cellspacing="0" class="horizontal tablesorter">
         <thead> 
             <tr> 
                 <th>Título</th> 
                 <th>Direccion</th> 
-                <th class="anno">Año</th> 
+                <th>Año</th>
             </tr> 
         </thead> 
         <tbody> 
@@ -34,7 +55,7 @@
             <tr>
                 <td><a href="{% url 'peliculas.views.detail' item.id %}">{{ item.titulo }}</a></td>
                 <td>{% for r in item.direccion.all %}<a href="{% url 'profesionales.views.detail' r.id %}">{{r.nombre}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</td>
-                <td class="anno">{{ item.anno }}</td>
+                <td>{{ item.anno }}</td>
             </tr>
         {% endfor %}
         </tbody> 

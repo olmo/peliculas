@@ -84,11 +84,12 @@ def tabla(request):
     elif vistas == 'no':
         kwargs_ex['id__in'] = inner_qs
 
+    num_pelis = Pelicula.objects.filter(**kwargs).exclude(**kwargs_ex).count()
     lista = Pelicula.objects.filter(**kwargs).exclude(**kwargs_ex).only('titulo','anno').prefetch_related('direccion')
 
-    filtro = FiltroForm(initial={'genero': genero, 'pais':pais, 'formato':formato, 'vistas':vistas})
+    filtro = FiltroForm(initial={'genero': genero, 'pais': pais, 'formato': formato, 'vistas': vistas})
 
-    return render_to_response('peliculas/tabla.html', {'lista': lista, 'filtro' : filtro, 'genero':genero, 'pais':pais, 'formato':formato, 'vistas':vistas}, context_instance=RequestContext(request))
+    return render_to_response('peliculas/tabla.html', {'lista': lista, 'num_pelis': num_pelis, 'filtro': filtro, 'genero': genero, 'pais': pais, 'formato': formato, 'vistas': vistas}, context_instance=RequestContext(request))
 	
 def detail(request, pelicula_id):
     p = get_object_or_404(Pelicula, pk=pelicula_id)

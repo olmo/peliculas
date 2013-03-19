@@ -684,3 +684,100 @@ p.error span { display: inline-block; background: #D43636; padding: 6px; border-
     border: 0;
     padding: 0;
 }
+
+
+
+/*
+    Tabla
+*/
+
+table#myTable{
+    margin: auto;
+    margin-top: 15px;
+    width: 95%;
+
+    border: 1px solid #cbcbcb;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border-top-left-radius: 5px;
+    -webkit-box-shadow: 0 1px 3px 1px rgba(0,0,0,.05);
+    -moz-box-shadow: 0 1px 3px 1px rgba(0,0,0,.05);
+    box-shadow: 0 1px 3px 1px rgba(0,0,0,.05);
+    background-color: #fafafa;
+    border-top-left-radius:5px;
+
+}
+
+#myTable thead {
+    background: -webkit-linear-gradient(top, #e9eaec 0%,#d4d4d6 100%);
+    background: -moz-linear-gradient(top, #e9eaec 0%,#d4d4d6 100%);
+    background: -o-linear-gradient(top, #e9eaec 0%,#d4d4d6 100%);
+    background: -ms-linear-gradient(top, #e9eaec 0%,#d4d4d6 100%);
+    background: linear-gradient(top, #e9eaec 0%,#d4d4d6 100%);
+}
+
+#myTable th {
+    font-size: 16px;
+    line-height: 10px;
+    padding: 20px 0;
+    border-bottom: 2px solid rgba(0,0,0,.15);
+    border-top: 1px solid rgba(255,255,255,.9);
+    text-shadow: 0 1px 1px #fff;
+    padding-right: 20px;
+    padding-left: 20px;
+    text-align: center;
+}
+
+#myTable th:last-child {border-top-right-radius:5px;}
+#myTable th:first-child {border-top-left-radius:5px;}
+#myTable tr:last-child td {border-bottom: none !important;}
+#myTable tr:first-child td {border-top: none !important;}
+#myTable td:last-child {border-right: none !important;}
+
+#myTable td {
+    border-top: 2px solid #fefefe;
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    padding: 13px 0;
+    padding-left: 20px;
+}
+
+#myTable.horizontal tr:nth-child(odd) {
+    background: -webkit-linear-gradient(top, rgba(255,255,255,0.05) 0%,rgba(0,0,0,.05) 100%);
+    background: -moz-linear-gradient(top, rgba(255,255,255,0.05) 0%,rgba(0,0,0,.05) 100%);
+    background: -o-linear-gradient(top, rgba(255,255,255,0.05) 0%,rgba(0,0,0,.05) 100%);
+    background: -ms-linear-gradient(top, rgba(255,255,255,0.05) 0%,rgba(0,0,0,.05) 100%);
+    background: linear-gradient(top, rgba(255,255,255,0.05) 0%,rgba(0,0,0,.05) 100%);
+}
+
+#myTable.vertical tr td:nth-child(even) {
+    background: -webkit-linear-gradient(top, rgba(255,255,255,0.01) 0%,rgba(0,0,0,.02) 100%);
+    background: -moz-linear-gradient(top, rgba(255,255,255,0.01) 0%,rgba(0,0,0,.02) 100%);
+    background: -o-linear-gradient(top, rgba(255,255,255,0.01) 0%,rgba(0,0,0,.02) 100%);
+    background: -ms-linear-gradient(top, rgba(255,255,255,0.01) 0%,rgba(0,0,0,.02) 100%);
+    background: linear-gradient(top, rgba(255,255,255,0.01) 0%,rgba(0,0,0,.02) 100%);
+    border-top: none;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+#myTable a {
+    color: #333;
+    text-decoration: none;
+}
+
+#myTable a:hover {
+    color: #A50336;
+    text-decoration: underline;
+}
+
+#myTable.tablesorter thead tr .headerSortUp {
+    background-image: url('images/asc.gif');
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+#myTable.tablesorter thead tr .headerSortDown {
+    background-image: url('images/desc.gif');
+    background-repeat: no-repeat;
+    background-position: center right;
+}
