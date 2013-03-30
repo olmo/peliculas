@@ -18,6 +18,7 @@ from django.http import HttpResponse
 from django.conf import settings
 from profesionales.views import obtenerInfoProfesional
 
+
 def index(request):
     ordenar = request.GET.get('ordenar', 'id')
     genero = request.GET.get('genero', 'todos')
@@ -27,7 +28,7 @@ def index(request):
 
     ord = 'peliculas_pelicula.'+ordenar
     if ordenar == 'id':
-        ord = '-'+ord
+        ord = '-' + ord
 
     kwargs = {}
     kwargs_ex = {}
@@ -59,10 +60,15 @@ def index(request):
     except (EmptyPage, InvalidPage):
         pelis = paginator.page(paginator.num_pages)
 
-    filtro = FiltroForm(initial={'ordenar': ordenar, 'genero': genero, 'pais': pais, 'formato':formato, 'vistas':vistas})
+    filtro = FiltroForm(initial={'ordenar': ordenar, 'genero': genero, 'pais': pais, 'formato': formato,
+                                 'vistas': vistas})
 
-    return render_to_response('peliculas/index.html', {'lista': pelis, 'num_pelis':num_pelis, 'filtro' : filtro, 'ordenar':ordenar, 'genero':genero, 'pais':pais, 'formato':formato, 'vistas':vistas}, context_instance=RequestContext(request))
+    return render_to_response('peliculas/index.html', {'lista': pelis, 'num_pelis': num_pelis, 'filtro': filtro,
+                                                       'ordenar': ordenar, 'genero': genero, 'pais': pais,
+                                                       'formato': formato, 'vistas': vistas},
+                              context_instance=RequestContext(request))
     
+
 def tabla(request):
     genero = request.GET.get('genero', 'todos')
     pais = request.GET.get('pais', 'todos')
@@ -89,11 +95,16 @@ def tabla(request):
 
     filtro = FiltroForm(initial={'genero': genero, 'pais': pais, 'formato': formato, 'vistas': vistas})
 
-    return render_to_response('peliculas/tabla.html', {'lista': lista, 'num_pelis': num_pelis, 'filtro': filtro, 'genero': genero, 'pais': pais, 'formato': formato, 'vistas': vistas}, context_instance=RequestContext(request))
-	
+    return render_to_response('peliculas/tabla.html', {'lista': lista, 'num_pelis': num_pelis,
+                                                       'filtro': filtro, 'genero': genero, 'pais': pais,
+                                                       'formato': formato, 'vistas': vistas},
+                              context_instance=RequestContext(request))
+
+
 def detail(request, pelicula_id):
     p = get_object_or_404(Pelicula, pk=pelicula_id)
     return render_to_response('peliculas/detail.html', {'item': p}, context_instance=RequestContext(request))
+
 
 def add(request):
     try:
@@ -138,6 +149,7 @@ def buscar(busqueda):
             d[id] = nombre
 
     return d
+
 
 def obtener(url):
     d = dict()
@@ -194,12 +206,14 @@ def obtener(url):
     
     return d
 
+
 def stripTags(c):
     str_list = []
     for num in xrange(len(c)):
         if c[num].string is not None:
             str_list.append(c[num].string)
     return ''.join(str_list)
+
 
 def guardar(valores):
     filename = valores['anno']+' - '+valores['titulo']+'.jpg'
@@ -214,14 +228,14 @@ def guardar(valores):
     urllib.urlretrieve(valores['poster'], settings.SITE_MEDIA+'posters/'+filename)
 
 
-    img = Image.open(settings.SITE_MEDIA+'posters/'+filename)
+    img = Image.open(settings.SITE_MEDIA+'posters/' + filename)
     size = 100, 200
     img.thumbnail(size)
-    img.save(settings.SITE_MEDIA+'posters/thumbs/'+filename, "JPEG")
+    img.save(settings.SITE_MEDIA+'posters/thumbs/' + filename, "JPEG")
 
     p = Pelicula(titulo=valores['titulo'], titulo_o=valores['titulo_o'], anno=valores['anno'],
                  duracion=int(re.match(r'\d+',valores['duracion']).group()), pais = valores['pais'],
-                 produccion = valores['productora'], poster = filename, sinopsis = valores['sinopsis'], web=valores['web'] )
+                 produccion=valores['productora'], poster=filename, sinopsis=valores['sinopsis'], web=valores['web'] )
     p.save()
 
     l = valores['genero'].split('.')
@@ -259,16 +273,36 @@ def guardar(valores):
 
     return p.id
 
+
 def vista(request):
     p = Pelicula.objects.get(id=request.GET['id'])
-    print request.GET['id']
+
     try:
         p.getVista(request.user.id)
-        v = Vista.objects.get(usuario=User.objects.get(id=request.user.id), pelicula=Pelicula.objects.get(id=request.GET['id']))
+        v = Vista.objects.get(usuario=User.objects.get(id=request.user.id),
+                              pelicula=Pelicula.objects.get(id=request.GET['id']))
         v.delete()
     except:
         v = Vista(usuario=User.objects.get(id=request.user.id), pelicula=Pelicula.objects.get(id=request.GET['id']))
         v.save()
+
+
+def votar(request):
+    peliculaid = request.POST['id']
+    valor = request.POST['value']
+    p = Pelicula.objects.get(peliculaid)
+
+    try:
+        p.getVista(request.user.id)
+        v = Vista.objects.get(usuario=User.objects.get(id=request.user.id),
+                              pelicula=Pelicula.objects.get(id=peliculaid))
+        v.voto = valor
+        v.save()
+    except:
+        v = Vista(usuario=User.objects.get(id=request.user.id),
+                  pelicula=Pelicula.objects.get(id=peliculaid), voto=valor)
+        v.save()
+
 
 def obtener_posters(request):
     pelis = Pelicula.objects.all().order_by('id').reverse()
@@ -309,9 +343,10 @@ def obtener_posters(request):
             p.poster = filename
             p.titulo_o = d['titulo_o']
             p.save()
-            num = num+1
+            num = num + 1
 
     return render_to_response('peliculas/posters.html', {'num': num}, context_instance=RequestContext(request))
+
 
 def autocompletar(request):
     query = SearchQuerySet().autocomplete(titulo_auto=request.GET.get('q', ''))[:5]
@@ -322,19 +357,18 @@ def autocompletar(request):
 
     for i in query:
         salida += '<li>'
-        salida += '<a href="/peliculas'+i.object.get_absolute_url()+'">\n'
-        if i.content_type()=='peliculas.pelicula':
-            salida += '<img src="/site_media/posters/thumbs/'+i.object.poster+'" />\n'
-            salida += '<span>'+i.object.titulo+'</span>\n'
+        salida += '<a href="/peliculas' + i.object.get_absolute_url() + '">\n'
+        if i.content_type() == 'peliculas.pelicula':
+            salida += '<img src="/site_media/posters/thumbs/' + i.object.poster + '" />\n'
+            salida += '<span>' + i.object.titulo + '</span>\n'
 
-        elif i.content_type()=='profesionales.profesional':
-            if i.object.foto!='':
+        elif i.content_type() == 'profesionales.profesional':
+            if i.object.foto != '':
                 salida += '<img src="/site_media/fotos/thumbs/'+i.object.foto+'" />\n'
-            salida += '<span>'+i.object.nombre+'</span>\n'
+            salida += '<span>' + i.object.nombre + '</span>\n'
 
         salida += '</a></li>'
 
     salida += '</ul></div>'
 
-
-    return HttpResponse(salida,mimetype="text/plain")
+    return HttpResponse(salida, mimetype="text/plain")

@@ -1,7 +1,9 @@
 {% extends "peliculas/base.html" %}
 {% load peliculas_extras %}
 {% block head %}
+    <script type="text/javascript" src="/site_media/jquery.rateit.min.js"></script>
     <script type="text/javascript" src="/site_media/vista.js"></script>
+    <link rel="stylesheet" href="/site_media/rateit.css" type="text/css" media="screen" />
 {% endblock %}
 {% block contenido %}
     <form class="filtro" action="{%  url 'peliculas.views.index' %}" method="get">
@@ -23,15 +25,19 @@
                 <a class="lightbox" title="{{ item.titulo }}" href="/site_media/posters/{{ item.poster }}">
                     <img src="/site_media/posters/thumbs/{{ item.poster }}" width="100px" alt=""></a>
                 <br />
-                <center>
+                <div id="votar">
+                    <div id="vista">
                     {% if user.is_authenticated %}
+                        <label for="{{ item.id }}">Vista</label>
                         {% if item|vista:user.id %}
-                            <input id="{{ item.id }}" type="image" title="Marcar como no vista" alt="Visto" src="/site_media/images/button_cancel.gif" style="margin-top: 10px;">
+                            <input type="checkbox" id="{{ item.id }}" class="regular-checkbox" checked="checked"/>
                         {% else %}
-                            <input id="{{ item.id }}" type="image" title="Marcar como vista" alt="Visto" src="/site_media/images/button_ok.gif" style="margin-top: 10px;">
+                            <input type="checkbox" id="{{ item.id }}" class="regular-checkbox"/>
                         {% endif %}
                     {% endif %}
-                </center>
+                    </div>
+                    <div data-peliculaid="{{ item.id }}" class="rateit" id="rateit{{ item.id }}" data-rateit-step="{% votos item.id %}"></div>
+                </div>
             </div>
             <div class="principal">
                 <div class="titulo"><a href="{% url 'peliculas.views.detail' item.id %}">{{ item.titulo }} ({{ item.anno }})</a></div>{% if user.is_staff %}<div class="edit"><a href="{% url 'admin:peliculas_pelicula_change' item.id %}"><img alt="Editar" src="/site_media/images/edit.png"></a></div>{% endif %}
@@ -43,5 +49,6 @@
             <div class="clear"></div>
         </article>
     {% endfor %}
+
     {% include "paginacion.html" %}
 {% endblock %}
