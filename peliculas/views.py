@@ -275,22 +275,25 @@ def guardar(valores):
 
 
 def vista(request):
-    p = Pelicula.objects.get(id=request.GET['id'])
+    p = Pelicula.objects.get(id=request.POST['id'])
 
     try:
         p.getVista(request.user.id)
         v = Vista.objects.get(usuario=User.objects.get(id=request.user.id),
-                              pelicula=Pelicula.objects.get(id=request.GET['id']))
+                              pelicula=Pelicula.objects.get(id=request.POST['id']))
         v.delete()
     except:
-        v = Vista(usuario=User.objects.get(id=request.user.id), pelicula=Pelicula.objects.get(id=request.GET['id']))
+        v = Vista(usuario=User.objects.get(id=request.user.id), pelicula=Pelicula.objects.get(id=request.POST['id']))
         v.save()
+
+    return HttpResponse('success')
 
 
 def votar(request):
-    peliculaid = request.POST['id']
-    valor = request.POST['value']
-    p = Pelicula.objects.get(peliculaid)
+    peliculaid = int(request.POST['id'])
+    valor = float(request.POST['value'])
+
+    p = Pelicula.objects.get(id=peliculaid)
 
     try:
         p.getVista(request.user.id)
@@ -302,6 +305,8 @@ def votar(request):
         v = Vista(usuario=User.objects.get(id=request.user.id),
                   pelicula=Pelicula.objects.get(id=peliculaid), voto=valor)
         v.save()
+
+    return HttpResponse('success')
 
 
 def obtener_posters(request):
