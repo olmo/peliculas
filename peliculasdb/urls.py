@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     (r'^peliculas/add/$', 'peliculas.views.add'),
     (r'^peliculas/tabla/$', 'peliculas.views.tabla'),
     (r'^peliculas/vista/$', 'peliculas.views.vista'),
+    (r'^peliculas/votar/$', 'peliculas.views.votar'),
     (r'^peliculas/posters/$', 'peliculas.views.obtener_posters'),
     (r'^peliculas/ajax/$', 'peliculas.views.autocompletar'),
 
