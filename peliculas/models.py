@@ -24,7 +24,7 @@ class Categoria(models.Model):
 class Vista(models.Model):
     usuario = models.ForeignKey(User)
     pelicula = models.ForeignKey('Pelicula')
-    voto = models.SmallIntegerField(default=0)
+    voto = models.DecimalField(default=0, max_digits=3, decimal_places=1)
 
 
 class Pelicula(models.Model):

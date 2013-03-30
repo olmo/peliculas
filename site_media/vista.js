@@ -16,6 +16,7 @@ $(document).ready(function(){
 
         var value = ri.rateit('value');
         var peliculaID = ri.data('peliculaid');
+        alert(value);
 
         //ri.rateit('readonly', true);
 
