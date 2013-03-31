@@ -28,16 +28,29 @@ $.ajaxSetup({
     }
 });
 
+jQuery.propHooks.checked = {
+    set: function (el, value) {
+        el.checked = value;
+        $(el).trigger('change');
+    }
+};
+
 $(document).ready(function(){
-    $("input:checkbox").click(function() {
-        $(this).prop('checked', !this.checked);
+    $("input:checkbox").mousedown(function() {
+
+        if ($(this).is(':checked')) {
+            $("#rateit"+this.id).rateit('value',0);
+        }
+
+        $(this).trigger("change");
+
         $.ajax({
             type: "POST",
             url: "http://1984.dyndns.org/peliculas/peliculas/vista/",
             data: { id: this.id }
             /*context: this,
             success: function (data) {
-                $(this).prop('checked', !this.checked);
+
             }*/
         });
         return false;
@@ -52,7 +65,8 @@ $(document).ready(function(){
         var value = ri.rateit('value');
         var peliculaID = ri.data('peliculaid');
 
-        //ri.rateit('readonly', true);
+        if(value>0 && !$("#"+peliculaID).prop("checked"))
+            $("#"+peliculaID).prop("checked", true);
 
         $.ajax({
             url: 'http://1984.dyndns.org/peliculas/peliculas/votar/',
