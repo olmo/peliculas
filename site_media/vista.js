@@ -30,22 +30,24 @@ $.ajaxSetup({
 
 $(document).ready(function(){
     $("input:checkbox").click(function() {
+        $(this).prop('checked', !this.checked);
         $.ajax({
             type: "POST",
             url: "http://1984.dyndns.org/peliculas/peliculas/vista/",
-            data: { id: this.id },
-            context: this,
+            data: { id: this.id }
+            /*context: this,
             success: function (data) {
                 $(this).prop('checked', !this.checked);
-            }
+            }*/
         });
         return false;
     });
 
     var tooltipvalues = ['basura', 'mala', 'normal', 'buena', 'excelente'];
-    $('.rateit').bind('rated reset', function (event, value) {
+    $(".rateit").bind('over', function (event, value) { $(this).attr('title', tooltipvalues[value-1]); });
+
+    $('.rateit').bind('rated reset', function (e) {
         var ri = $(this);
-        $(this).attr('title', tooltipvalues[value-1]);
 
         var value = ri.rateit('value');
         var peliculaID = ri.data('peliculaid');
