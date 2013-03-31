@@ -1,7 +1,9 @@
 {% extends "peliculas/base.html" %}
 {% load peliculas_extras %}
 {% block head %}
+    <script type="text/javascript" src="/site_media/jquery.rateit.min.js"></script>
     <script type="text/javascript" src="/site_media/vista.js"></script>
+    <link rel="stylesheet" href="/site_media/rateit.css" type="text/css" media="screen" />
 {% endblock %}
 {% block contenido %}
     <article>
@@ -9,15 +11,23 @@
             <a class="lightbox" title="{{ item.titulo }}" href="/site_media/posters/{{ item.poster }}">
                 <img src="/site_media/posters/thumbs/{{ item.poster }}" width="100px" alt=""></a>
             <br />
-            <center>
-                {% if user.is_authenticated %}
-                    {% if item|vista:user.id %}
-                        <input id="{{ item.id }}" type="image" title="Marcar como no vista" alt="Visto" src="/site_media/images/button_cancel.gif" style="margin-top: 10px;">
-                    {% else %}
-                        <input id="{{ item.id }}" type="image" title="Marcar como vista" alt="Visto" src="/site_media/images/button_ok.gif" style="margin-top: 10px;">
+            <div id="votar">
+                <div id="vista">
+                    {% if user.is_authenticated %}
+                        <label for="{{ item.id }}">Vista</label>
+                        {% if item|vista:user.id %}
+                            <input type="checkbox" id="{{ item.id }}" class="regular-checkbox" checked="checked"/>
+                        {% else %}
+                            <input type="checkbox" id="{{ item.id }}" class="regular-checkbox"/>
+                        {% endif %}
                     {% endif %}
+                </div>
+                {% if user.is_authenticated %}
+                    <div data-peliculaid="{{ item.id }}" class="rateit" id="rateit{{ item.id }}" data-rateit-step="0.5"  data-rateit-value="{% votos item.id %}"></div>
+                {% else %}
+                    <div data-peliculaid="{{ item.id }}" class="rateit" id="rateit{{ item.id }}" data-rateit-readonly="true" data-rateit-step="0.5"  data-rateit-value="{% votos item.id %}" style="padding-left: 16px;"></div>
                 {% endif %}
-            </center>
+            </div>
         </div>
         <div class="principal">
             <div class="titulo">{{ item.titulo }} ({{ item.anno }})</div>{% if user.is_staff %}<div class="edit"><a href="{% url 'admin:peliculas_pelicula_change' item.id %}"><img alt="Editar" src="/site_media/images/edit.png"></a></div>{% endif %}
