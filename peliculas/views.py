@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from peliculas.models import Pelicula, Genero, Reparto, Direccion, Musica, Fotografia, Guion, Vista, Categoria
 from profesionales.models import Profesional
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 from urllib2 import urlopen
 import re
 import urllib
@@ -116,35 +116,39 @@ def add(request):
         d = buscar(request.POST['nombre'])
         if d.__len__() == 1:
             apartado = 2
-            url = "http://www.filmaffinity.com/es/film"+d.iterkeys().next()+".html"
+            url = "http://www.filmaffinity.com/es/film" + d.iterkeys().next() + ".html"
             d = obtener(url)
             cat = Categoria.objects.all()
-            return render_to_response('peliculas/add.html', {'apartado': apartado, 'info': d, 'cat':cat}, context_instance=RequestContext(request))
+            return render_to_response('peliculas/add.html', {'apartado': apartado, 'info': d, 'cat': cat},
+                                      context_instance=RequestContext(request))
         else:
-            return render_to_response('peliculas/add.html', {'apartado': apartado, 'resultados': d}, context_instance=RequestContext(request))
+            return render_to_response('peliculas/add.html', {'apartado': apartado, 'resultados': d},
+                                      context_instance=RequestContext(request))
     elif apartado == 2:
-        url = "http://www.filmaffinity.com/es/film"+request.POST['choice']+".html"
+        url = "http://www.filmaffinity.com/es/film" + request.POST['choice']+".html"
         d = obtener(url)
         cat = Categoria.objects.all()
-        return render_to_response('peliculas/add.html', {'apartado': apartado, 'info': d, 'cat':cat}, context_instance=RequestContext(request))
+        return render_to_response('peliculas/add.html', {'apartado': apartado, 'info': d, 'cat': cat},
+                                  context_instance=RequestContext(request))
     elif apartado == 3:
         id = guardar(request.POST)
-        return HttpResponseRedirect('/peliculas/peliculas/'+str(id))
+        return HttpResponseRedirect('/peliculas/peliculas/' + str(id))
 
-    return render_to_response('peliculas/add.html', {'apartado': apartado}, context_instance=RequestContext(request))
+    return render_to_response('peliculas/add.html', {'apartado': apartado},
+                              context_instance=RequestContext(request))
 
 
 def buscar(busqueda):
     busqueda = busqueda.replace(' ','+')
-    address='http://www.filmaffinity.com/es/advsearch.php?stext='+busqueda+'&stype[]=title'
+    address = 'http://www.filmaffinity.com/es/advsearch.php?stext=' + busqueda + '&stype[]=title'
     html = urlopen(address).read()
     soup = BeautifulSoup(html)
     pTag = soup.find('a')
-    resultados = pTag.findAllNext(attrs={"href" : re.compile("/es/film*")})
+    resultados = pTag.findAllNext(attrs={"href": re.compile("/es/film*")})
     d = dict()
     for res in resultados:
         if ('img' in str(res)) == False:
-            id = str(res)[17:].split('>')[0][:-6]
+            id = str(res)[34:].split('>')[0][:-6]
             nombre = str(res)[9:].split('>')[1][:-3]
             d[id] = nombre
 
@@ -156,22 +160,19 @@ def obtener(url):
     html = urlopen(url)
     soup = BeautifulSoup(html)
 
-    d['titulo'] = soup.find('img',src=re.compile('movie.gif$')).nextSibling.string.strip()
-    d['titulo_o'] = soup.find(text=u'T&Iacute;TULO ORIGINAL').parent.parent.td.strong.string.strip()
-    if soup.find(text=u'A&Ntilde;O').parent.parent.td.string != None:
-        d['anno'] = soup.find(text=u'A&Ntilde;O').parent.parent.td.string.strip()
-    else:
-        d['anno'] = soup.find(text=u'A&Ntilde;O').parent.parent.td.contents[2].strip()
-    d['duracion'] = soup.find(text=u'DURACI&Oacute;N').parent.parent.td.div.nextSibling.string.strip()
-    d['pais'] = soup.find(text=u'PA&Iacute;S').parent.parent.parent.td.img['title']
-    d['director'] = stripTags(soup.find(text='DIRECTOR').parent.parent.td.contents).strip()
-    d['guion'] = stripTags(soup.find(text=u'GUI&Oacute;N').parent.parent.td.contents).strip()
-    d['musica'] = stripTags(soup.find(text=u'M&Uacute;SICA').parent.parent.td.contents).strip()
-    d['fotografia'] = stripTags(soup.find(text=u'FOTOGRAF&Iacute;A').parent.parent.td.contents).strip()
-    d['reparto'] = stripTags(soup.find(text='REPARTO').parent.parent.td.contents).strip()
-    d['productora'] = stripTags(soup.find(text='PRODUCTORA').parent.parent.td.contents).strip()
-    d['genero'] = stripTags(soup.find(text=u'G&Eacute;NERO').parent.parent.td.contents).strip()
-    d['sinopsis'] = stripTags(soup.find(text='SINOPSIS').parent.parent.td.contents).strip()
+    d['titulo'] = soup.find('h1',id=re.compile('main-title$')).text.strip()
+    d['titulo_o'] = soup.find(text=u'Título original').parent.next_sibling.next_sibling.text.strip()
+    d['anno'] = soup.find(text=u'Año').parent.next_sibling.next_sibling.text.strip()
+    d['duracion'] = soup.find(text=u'Duración').parent.next_sibling.next_sibling.text.strip()
+    d['pais'] = soup.find(text=u'País').parent.next_sibling.next_sibling.text.strip()
+    d['director'] = soup.find_all(text='Director')[1].parent.next_sibling.next_sibling.text.strip()
+    d['guion'] = soup.find(text=u'Guión').parent.next_sibling.next_sibling.text.strip()
+    d['musica'] = soup.find(text=u'Música').parent.next_sibling.next_sibling.text.strip()
+    d['fotografia'] = soup.find(text=u'Fotografía').parent.next_sibling.next_sibling.text.strip()
+    d['reparto'] = soup.find_all(text='Reparto')[1].parent.next_sibling.next_sibling.text.strip()
+    d['productora'] = soup.find(text='Productora').parent.next_sibling.next_sibling.text.strip()
+    d['genero'] = soup.find(text=u'Género').parent.next_sibling.next_sibling.text.strip()
+    d['sinopsis'] = soup.find(text='Sinopsis').parent.next_sibling.next_sibling.text.strip()
 
     d['sinopsis'] = d['sinopsis'].replace('&quot;','"')
 
@@ -195,7 +196,7 @@ def obtener(url):
     d['genero'] = r.sub('',d['genero'])
     r = re.compile('\t*')
     d['genero'] = r.sub('',d['genero'])
-    d['genero'] = d['genero'].replace(', ',',')
+    d['genero'] = d['genero'].replace('  ','')
 
     try:
         d['poster'] = soup.find('a', {'class':"lightbox"})['href']
