@@ -22,3 +22,8 @@ def votos(obj):
         return 0
     else:
         return media['voto__avg']
+
+@register.simple_tag()
+def voto(obj, user):
+    return Vista.objects.filter(pelicula=obj, usuario=user)
+

@@ -37,7 +37,7 @@
                     {% endif %}
                     </div>
                     {% if user.is_authenticated %}
-                        <div data-peliculaid="{{ item.id }}" class="rateit" id="rateit{{ item.id }}" data-rateit-step="0.5"  data-rateit-value="{% votos item.id %}"></div>
+                        <div data-peliculaid="{{ item.id }}" class="rateit" id="rateit{{ item.id }}" data-rateit-step="0.5" data-rateit-value="{% voto item.id user.id %}"></div>
                     {% else %}
                         <div data-peliculaid="{{ item.id }}" class="rateit" id="rateit{{ item.id }}" data-rateit-readonly="true" data-rateit-step="0.5"  data-rateit-value="{% votos item.id %}" style="padding-left: 16px;"></div>
                     {% endif %}
