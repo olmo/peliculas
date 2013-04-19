@@ -17,6 +17,7 @@ from haystack.query import SearchQuerySet
 from django.http import HttpResponse
 from django.conf import settings
 from profesionales.views import obtenerInfoProfesional
+import unicodedata
 
 
 def index(request):
@@ -113,19 +114,19 @@ def add(request):
         apartado = 0
 
     if apartado == 1:
-        d = buscar(request.POST['nombre'])
-        if d.__len__() == 1:
+        l = buscar(request.POST['nombre'])
+        if len(l) == 1:
             apartado = 2
-            url = "http://www.filmaffinity.com/es/film" + d.iterkeys().next() + ".html"
+            url = "http://www.filmaffinity.com" + l[0]['id']
             d = obtener(url)
             cat = Categoria.objects.all()
             return render_to_response('peliculas/add.html', {'apartado': apartado, 'info': d, 'cat': cat},
                                       context_instance=RequestContext(request))
         else:
-            return render_to_response('peliculas/add.html', {'apartado': apartado, 'resultados': d},
+            return render_to_response('peliculas/add.html', {'apartado': apartado, 'resultados': l},
                                       context_instance=RequestContext(request))
     elif apartado == 2:
-        url = "http://www.filmaffinity.com/es/film" + request.POST['choice']+".html"
+        url = "http://www.filmaffinity.com" + request.POST['choice']
         d = obtener(url)
         cat = Categoria.objects.all()
         return render_to_response('peliculas/add.html', {'apartado': apartado, 'info': d, 'cat': cat},
@@ -140,19 +141,21 @@ def add(request):
 
 def buscar(busqueda):
     busqueda = busqueda.replace(' ','+')
+    busqueda = unicodedata.normalize('NFKD', busqueda).encode('ascii','ignore')
     address = 'http://www.filmaffinity.com/es/advsearch.php?stext=' + busqueda + '&stype[]=title'
-    html = urlopen(address).read()
+    html = urlopen(address)
     soup = BeautifulSoup(html)
-    pTag = soup.find('a')
-    resultados = pTag.findAllNext(attrs={"href": re.compile("/es/film*")})
-    d = dict()
+    resultados = soup.find_all('table', class_='movie-card-1')
+    l = list()
     for res in resultados:
-        if ('img' in str(res)) == False:
-            id = str(res)[34:].split('>')[0][:-6]
-            nombre = str(res)[9:].split('>')[1][:-3]
-            d[id] = nombre
+        id = res.find('a',class_='mc-title')['href']
+        imagen = res.find('img')['src']
+        titulo = res.find('a',class_='mc-title').parent.text.strip()
+        direccion = res.find('span',class_='mc-director').text.strip()
+        reparto = res.find('div',class_='mc-cast').text.strip()
+        l.append({'id':id,'titulo':titulo,'imagen':imagen,'direccion':direccion,'reparto':reparto})
 
-    return d
+    return l
 
 
 def obtener(url):

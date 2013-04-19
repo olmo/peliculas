@@ -831,3 +831,33 @@ table#myTable{
     margin-top: 5px;
     padding-left: 8px;
 }
+
+div .hover {
+    background-color: #E0F0CF;
+}
+
+div .selected {
+    background-color: #F0DACF;
+}
+
+.elegir {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.elegir img{
+    float: left;
+    margin-right: 15px;
+}
+
+.elegir span {
+    display: block;
+    font: bold 12px Arial, Helvetica, sans-serif;
+    margin-bottom: 8px;
+}
+
+.elegir .titulo {
+    color: #A50336;
+    font: bold 14px Arial, Helvetica, sans-serif;
+}

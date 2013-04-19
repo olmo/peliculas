@@ -1,4 +1,28 @@
 {% extends "peliculas/base.html" %}
+{% block head %}
+<script>
+    $(document).ready(function(){
+    $(".elegir").click(
+            function(event) {
+                event.preventDefault();
+                var $boxes = $(this).parent().children();
+                $boxes.removeClass("selected");
+                $(this).addClass("selected");
+                $(this).find(":radio").attr("checked","checked");
+            }
+    );
+
+    $(".elegir").hover(
+        function () {
+            $(this).addClass("hover");
+        },
+        function () {
+            $(this).removeClass("hover");
+        }
+    );
+    });
+</script>
+{% endblock %}
 {% block contenido %}
     <article>
     {% if apartado == 0 %}
@@ -13,12 +37,17 @@
     {% if apartado == 1 %}
         <form action="{% url 'peliculas.views.add' %}" method="post">
             {% csrf_token %}
-            {% for v,k in resultados.iteritems %}
-                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ v }}" />
-                <label for="choice{{ forloop.counter }}">{{ k }}</label><br />
+            {% for res in resultados %}
+                <div class="elegir">
+                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ res.id }}" style="display: none;"/>
+                <img src="{{ res.imagen }}" />
+                <span class="titulo">{{ res.titulo }}</span>
+                <span>{{ res.direccion }}</span>
+                <span>{{ res.reparto }}</span>
+                </div>
             {% endfor %}
             <input type="hidden" name="apartado" value="2" />
-            <input type="submit" value="Continuar" />
+            <input class="boton" type="submit" value="Continuar" />
         </form>
     {% endif %}
 
