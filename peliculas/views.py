@@ -140,21 +140,23 @@ def add(request):
 
 
 def buscar(busqueda):
-    busqueda = busqueda.replace(' ','+')
-    busqueda = unicodedata.normalize('NFKD', busqueda).encode('ascii','ignore')
+    busqueda = busqueda.replace(' ', '+')
+    busqueda = unicodedata.normalize('NFKD', busqueda).encode('ascii', 'ignore')
+    print busqueda
     address = 'http://www.filmaffinity.com/es/advsearch.php?stext=' + busqueda + '&stype[]=title'
     html = urlopen(address)
     soup = BeautifulSoup(html)
-    resultados = soup.find_all('table', class_='movie-card-1')
+    resultados = soup.find_all('div', class_='movie-card')
     l = list()
     for res in resultados:
-        id = res.find('a',class_='mc-title')['href']
+        id = res.find('a')['href']
         imagen = res.find('img')['src']
-        titulo = res.find('a',class_='mc-title').parent.text.strip()
-        direccion = res.find('span',class_='mc-director').text.strip()
-        reparto = res.find('div',class_='mc-cast').text.strip()
-        l.append({'id':id,'titulo':titulo,'imagen':imagen,'direccion':direccion,'reparto':reparto})
+        titulo = res.find('div', class_='mc-title').text.strip()
+        direccion = res.find('div', class_='mc-director').text.strip()
+        reparto = res.find('div', class_='mc-cast').text.strip()
+        l.append({'id': id, 'titulo': titulo, 'imagen': imagen, 'direccion': direccion, 'reparto': reparto})
 
+    print l
     return l
 
 
