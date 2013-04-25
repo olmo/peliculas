@@ -80,7 +80,7 @@
             <div style="display: block; margin-left: 10px;">
                 <label>Sinopsis</label><textarea name="sinopsis" cols="45" rows="7">{{ info.sinopsis }}</textarea>
 
-            <label>Categoría</label><select name="categoria">{% for c in cat %}<option value="{{ c.id }}">{{ c.nombre }}</option> {% endfor %}</select>
+            <label>Categoría</label><select name="categoria">{% for c in cat %}<option value="{{ c.id }}"{% ifequal c.id 2 %} selected="selected"{% endifequal %}>{{ c.nombre }}</option> {% endfor %}</select>
             <input type="hidden" name="apartado" value="3" />
             <button class="boton" type="submit">Añadir</button>
             </div>
