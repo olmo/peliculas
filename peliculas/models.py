@@ -2,6 +2,7 @@ from django.db import models
 from profesionales.models import Profesional
 from django.forms import ModelForm
 from django.contrib.auth.models import User
+import datetime
 
 
 class Genero(models.Model):
@@ -25,7 +26,7 @@ class Vista(models.Model):
     usuario = models.ForeignKey(User)
     pelicula = models.ForeignKey('Pelicula')
     voto = models.DecimalField(default=0, max_digits=3, decimal_places=1)
-    #last_modified = models.DateTimeField(auto_now=True)
+    last_modified = models.DateTimeField(auto_now=True, default=datetime.datetime.now())
 
 
 class Pelicula(models.Model):
